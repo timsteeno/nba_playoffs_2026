@@ -64,7 +64,7 @@ function renderXAxis(totalPlayed) {
 }
 
 function renderSlot(game, gameIndex, roundLabel, finished) {
-  if (!game) {
+  if (!game || game.diff === null) {
     return finished
       ? `<div class="bar-slot"></div>`
       : `<div class="bar-slot"><div class="upcoming-badge"></div></div>`;

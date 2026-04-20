@@ -141,7 +141,9 @@ header .subtitle {
   display: flex;
   align-items: flex-end;
   gap: 4px;
-  height: 72px;
+  /* Height must fit: midline (50%) + MAX_BAR_PX (34) + label gap (2) + label height (~10).
+     => at least ~92px on each side of the midline, so 96px total leaves a small cushion. */
+  height: 96px;
   position: relative;
   overflow-x: auto;
 }

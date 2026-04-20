@@ -52,13 +52,16 @@ function renderXAxis(totalPlayed) {
   let gameNum = 0;
   const inner = visibleRounds(totalPlayed).map((round, r) => {
     const divider = r > 0 ? `<div class="x-divider"></div>` : "";
-    const label   = `<span class="x-round-label">${esc(round.label)}</span>`;
     const ticks = Array.from({ length: round.games }, (_, g) => {
       gameNum++;
       const played = gameNum <= totalPlayed ? " played" : "";
       return `<div class="x-tick${played}">G${g + 1}</div>`;
     }).join("");
-    return divider + label + ticks;
+    const group = `<div class="x-round">
+      <div class="x-round-label">${esc(round.label)}</div>
+      <div class="x-ticks">${ticks}</div>
+    </div>`;
+    return divider + group;
   }).join("");
   return `<div class="x-axis">${inner}</div>`;
 }

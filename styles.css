@@ -212,11 +212,19 @@ header .subtitle {
 
 .x-axis {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 4px;
   margin-left: 150px;
   margin-bottom: 6px;
   overflow-x: auto;
+}
+.x-round {
+  display: flex;
+  flex-direction: column;
+}
+.x-ticks {
+  display: flex;
+  gap: 4px;
 }
 .x-tick {
   flex: 0 0 var(--bar-w);
@@ -232,10 +240,10 @@ header .subtitle {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.55rem;
   color: var(--muted);
-  white-space: nowrap;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  margin-right: 4px;
+  text-align: center;
+  margin-bottom: 2px;
 }
 
 .loading {

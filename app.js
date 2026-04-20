@@ -1,216 +1,217 @@
 // ─────────────────────────────────────────────
-//  LOGO MAP  (ESPN CDN — works on open web)
+//  CONFIG
 // ─────────────────────────────────────────────
-const LOGOS = {
-  DET: "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
-  BOS: "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
-  NYK: "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
-  CLE: "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
-  TOR: "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
-  ATL: "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
-  PHI: "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
-  ORL: "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
-  OKC: "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
-  SAS: "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
-  DEN: "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
-  LAL: "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
-  HOU: "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
-  MIN: "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
-  POR: "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
-  PHX: "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
+const LOGO_BASE = "https://a.espncdn.com/i/teamlogos/nba/500";
+const LOGO_SLUG = {
+  DET: "det", BOS: "bos", NYK: "ny",  CLE: "cle", TOR: "tor",
+  ATL: "atl", PHI: "phi", ORL: "orl", OKC: "okc", SAS: "sa",
+  DEN: "den", LAL: "lal", HOU: "hou", MIN: "min", POR: "por", PHX: "phx",
 };
+const logoFor = (abbr) => LOGO_SLUG[abbr] ? `${LOGO_BASE}/${LOGO_SLUG[abbr]}.png` : "";
 
-// Round labels shown as dividers on the x-axis
-// Each entry: { label, gamesPerRound }
-// gamesPerRound = max games in that round (7 for a full series)
 const ROUNDS = [
-  { label: "R1", games: 7 },
-  { label: "R2", games: 7 },
-  { label: "CF", games: 7 },
+  { label: "R1",     games: 7 },
+  { label: "R2",     games: 7 },
+  { label: "CF",     games: 7 },
   { label: "Finals", games: 7 },
 ];
-
+const GAMES_PER_ROUND = 7;
 const MAX_DIFF = 40;
+const MAX_BAR_PX = 34;
+const MIN_BAR_PX = 4;
 
 // ─────────────────────────────────────────────
 //  HELPERS
 // ─────────────────────────────────────────────
-function getSeriesStatus(games) {
-  const wins = games.filter(g => g.diff > 0).length;
-  const losses = games.filter(g => g.diff < 0).length;
-  if (wins === 4) return { label: `WON 4-${losses}`, cls: "leading" };
-  if (losses === 4) return { label: `LOST ${wins}-4`, cls: "trailing" };
-  if (wins > losses) return { label: `${wins}-${losses}`, cls: "leading" };
-  if (losses > wins) return { label: `${wins}-${losses}`, cls: "trailing" };
-  if (wins === 0 && losses === 0) return { label: "0-0", cls: "tied" };
-  return { label: `${wins}-${losses}`, cls: "tied" };
+const esc = (v) => String(v).replace(/[&<>"']/g, (c) => (
+  { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+));
+
+const countWins   = (games) => games.filter((g) => g.diff > 0).length;
+const countLosses = (games) => games.filter((g) => g.diff < 0).length;
+const isSeriesWon  = (games) => countWins(games)   === 4;
+const isEliminated = (games) => countLosses(games) === 4;
+
+function seriesStatus(games) {
+  const w = countWins(games);
+  const l = countLosses(games);
+  if (w === 4) return { label: `WON 4-${l}`,  cls: "leading"  };
+  if (l === 4) return { label: `LOST ${w}-4`, cls: "trailing" };
+  const cls = w > l ? "leading" : l > w ? "trailing" : "tied";
+  return { label: `${w}-${l}`, cls };
 }
 
-function isEliminated(games) {
-  return games.filter(g => g.diff < 0).length === 4;
-}
+// Show rounds that have started, plus the next one once the prior is wrapping up.
+const visibleRounds = (totalPlayed) =>
+  ROUNDS.filter((_, r) => r * GAMES_PER_ROUND <= totalPlayed + 1);
 
-function isSeriesWon(games) {
-  return games.filter(g => g.diff > 0).length === 4;
-}
-
-// Work out how many games have been played in each round
-// Round boundary: every 7 games
-function gamesPlayedInRound(roundIndex, games) {
-  const start = roundIndex * 7;
-  return games.slice(start, start + 7);
-}
-
-function buildXAxis(totalGamesPlayed) {
-  let html = '';
+// ─────────────────────────────────────────────
+//  RENDERERS (return HTML strings; all dynamic values escaped)
+// ─────────────────────────────────────────────
+function renderXAxis(totalPlayed) {
   let gameNum = 0;
-
-  for (let r = 0; r < ROUNDS.length; r++) {
-    const roundStart = r * 7;
-    // Only show rounds that have started or are the next upcoming
-    if (roundStart > totalGamesPlayed + 1) break;
-
-    if (r > 0) {
-      html += `<div class="x-divider"></div>`;
-    }
-    html += `<span class="x-round-label">${ROUNDS[r].label}</span>`;
-
-    for (let g = 0; g < ROUNDS[r].games; g++) {
+  const inner = visibleRounds(totalPlayed).map((round, r) => {
+    const divider = r > 0 ? `<div class="x-divider"></div>` : "";
+    const label   = `<span class="x-round-label">${esc(round.label)}</span>`;
+    const ticks = Array.from({ length: round.games }, (_, g) => {
       gameNum++;
-      const played = gameNum <= totalGamesPlayed;
-      html += `<div class="x-tick${played ? ' played' : ''}">G${g + 1}</div>`;
-    }
-  }
-  return `<div class="x-axis">${html}</div>`;
+      const played = gameNum <= totalPlayed ? " played" : "";
+      return `<div class="x-tick${played}">G${g + 1}</div>`;
+    }).join("");
+    return divider + label + ticks;
+  }).join("");
+  return `<div class="x-axis">${inner}</div>`;
 }
 
-function buildBarHTML(team) {
-  const games = team.games;
-  const totalPlayed = games.length;
-  const elim = isEliminated(games);
-  const won = isSeriesWon(games);
-  let slots = '';
-
-  for (let r = 0; r < ROUNDS.length; r++) {
-    const roundStart = r * 7;
-    if (roundStart > totalPlayed + 1) break;
-
-    if (r > 0) {
-      slots += `<div class="round-divider"></div>`;
-    }
-
-    for (let g = 0; g < ROUNDS[r].games; g++) {
-      const idx = roundStart + g;
-      const game = games[idx];
-
-      if (!game) {
-        // Don't show future slots if series is over
-        if (elim || won) {
-          slots += `<div class="bar-slot"></div>`;
-        } else {
-          slots += `<div class="bar-slot"><div class="upcoming-badge"></div></div>`;
-        }
-      } else {
-        const pct = Math.min(Math.abs(game.diff) / MAX_DIFF, 1);
-        const px = Math.max(pct * 34, 4);
-        const cls = game.diff > 0 ? 'win' : 'loss';
-        const sign = game.diff > 0 ? '+' : '';
-        const labelStyle = game.diff > 0
-          ? `bottom: calc(50% + ${px + 2}px)`
-          : `top: calc(50% + ${px + 2}px)`;
-
-        slots += `
-          <div class="bar-slot has-game"
-            data-game="${g + 1}"
-            data-round="${ROUNDS[r].label}"
-            data-score="${game.score}"
-            data-diff="${sign}${game.diff}"
-            data-date="${game.date}"
-            data-result="${game.diff > 0 ? 'W' : 'L'}"
-            onmouseenter="showTip(event,this)"
-            onmouseleave="hideTip()"
-            ontouchstart="showTip(event,this)">
-            <div class="bar ${cls}" style="height:${px}px"></div>
-            <span class="bar-label" style="${labelStyle}">${sign}${game.diff}</span>
-          </div>`;
-      }
-    }
+function renderSlot(game, gameIndex, roundLabel, finished) {
+  if (!game) {
+    return finished
+      ? `<div class="bar-slot"></div>`
+      : `<div class="bar-slot"><div class="upcoming-badge"></div></div>`;
   }
-  return slots;
-}
-
-function buildTeamRow(team) {
-  const status = getSeriesStatus(team.games);
-  const elim = isEliminated(team.games);
-  const logo = LOGOS[team.abbr] || '';
+  const isWin = game.diff > 0;
+  const px    = Math.max(Math.min(Math.abs(game.diff) / MAX_DIFF, 1) * MAX_BAR_PX, MIN_BAR_PX);
+  const sign  = isWin ? "+" : "";
+  const cls   = isWin ? "win" : "loss";
+  const labelStyle = isWin
+    ? `bottom: calc(50% + ${px + 2}px)`
+    : `top: calc(50% + ${px + 2}px)`;
   return `
-    <div class="team-row${elim ? ' eliminated' : ''}">
-      <div class="team-name-block">
-        ${logo ? `<img class="team-logo" src="${logo}" alt="${team.abbr}" onerror="this.style.display='none'">` : ''}
-        <div class="team-text">
-          <div class="seed">#${team.seed} vs #${team.oppSeed} ${team.opponent}</div>
-          <div class="team-abbr">${team.abbr}</div>
-          <div class="series-status ${status.cls}">${status.label}</div>
-        </div>
-      </div>
-      <div class="chart-area">${buildBarHTML(team)}</div>
+    <div class="bar-slot has-game"
+      data-game="${gameIndex + 1}"
+      data-round="${esc(roundLabel)}"
+      data-score="${esc(game.score)}"
+      data-diff="${sign}${game.diff}"
+      data-date="${esc(game.date)}"
+      data-result="${isWin ? "W" : "L"}">
+      <div class="bar ${cls}" style="height:${px}px"></div>
+      <span class="bar-label" style="${labelStyle}">${sign}${game.diff}</span>
     </div>`;
 }
 
-function buildConference(teams, label, cls, round, lastUpdated) {
-  const maxGames = Math.max(...teams.map(t => t.games.length));
+function renderBars(team) {
+  const totalPlayed = team.games.length;
+  const finished    = isSeriesWon(team.games) || isEliminated(team.games);
+  return visibleRounds(totalPlayed).map((round, r) => {
+    const divider = r > 0 ? `<div class="round-divider"></div>` : "";
+    const slots = Array.from({ length: round.games }, (_, g) => {
+      const idx = r * GAMES_PER_ROUND + g;
+      return renderSlot(team.games[idx], g, round.label, finished);
+    }).join("");
+    return divider + slots;
+  }).join("");
+}
+
+function renderTeamRow(team) {
+  const status = seriesStatus(team.games);
+  const elim   = isEliminated(team.games) ? " eliminated" : "";
+  const logo   = logoFor(team.abbr);
+  const img    = logo
+    ? `<img class="team-logo" src="${esc(logo)}" alt="${esc(team.abbr)}" loading="lazy" referrerpolicy="no-referrer">`
+    : "";
+  return `
+    <div class="team-row${elim}">
+      <div class="team-name-block">
+        ${img}
+        <div class="team-text">
+          <div class="seed">#${team.seed} vs #${team.oppSeed} ${esc(team.opponent)}</div>
+          <div class="team-abbr">${esc(team.abbr)}</div>
+          <div class="series-status ${status.cls}">${esc(status.label)}</div>
+        </div>
+      </div>
+      <div class="chart-area">${renderBars(team)}</div>
+    </div>`;
+}
+
+function renderConference({ teams, label, cls, round, lastUpdated }) {
+  const maxGames = Math.max(...teams.map((t) => t.games.length));
   return `
     <div class="conf-section">
       <div class="conf-label ${cls}">
-        ${label} Conference
-        <span class="round-tag">${round} · updated ${lastUpdated}</span>
+        ${esc(label)} Conference
+        <span class="round-tag">${esc(round)} · updated ${esc(lastUpdated)}</span>
       </div>
-      ${buildXAxis(maxGames)}
-      ${teams.map(buildTeamRow).join('')}
+      ${renderXAxis(maxGames)}
+      ${teams.map(renderTeamRow).join("")}
     </div>`;
 }
 
 // ─────────────────────────────────────────────
-//  TOOLTIP
+//  TOOLTIP (event delegation, no inline handlers, no innerHTML)
 // ─────────────────────────────────────────────
-const tooltip = document.getElementById('tooltip');
+const tooltip = document.getElementById("tooltip");
+
+function moveTip(e) {
+  const p = e.touches?.[0] ?? e;
+  tooltip.style.left = `${p.clientX + 14}px`;
+  tooltip.style.top  = `${p.clientY - 10}px`;
+}
+
 function showTip(e, el) {
-  const result = el.dataset.result;
-  tooltip.innerHTML = `
-    <span style="color:${result === 'W' ? 'var(--win)' : 'var(--loss)'}">${result === 'W' ? '▲ WIN' : '▼ LOSS'}</span>  ${el.dataset.round} Game ${el.dataset.game} · ${el.dataset.date}<br>
-    Score: ${el.dataset.score} &nbsp; Margin: ${el.dataset.diff}
-  `;
-  tooltip.style.display = 'block';
+  const { result, round, game, date, score, diff } = el.dataset;
+  const win = result === "W";
+
+  const arrow = document.createElement("span");
+  arrow.style.color = `var(--${win ? "win" : "loss"})`;
+  arrow.textContent = win ? "▲ WIN" : "▼ LOSS";
+
+  tooltip.replaceChildren(
+    arrow,
+    document.createTextNode(`  ${round} Game ${game} · ${date}`),
+    document.createElement("br"),
+    document.createTextNode(`Score: ${score}   Margin: ${diff}`),
+  );
+  tooltip.style.display = "block";
   moveTip(e);
 }
-function moveTip(e) {
-  const x = (e.touches ? e.touches[0].clientX : e.clientX) + 14;
-  const y = (e.touches ? e.touches[0].clientY : e.clientY) - 10;
-  tooltip.style.left = x + 'px';
-  tooltip.style.top = y + 'px';
-}
-function hideTip() { tooltip.style.display = 'none'; }
-document.addEventListener('mousemove', moveTip);
+
+const hideTip = () => { tooltip.style.display = "none"; };
+
+document.addEventListener("mousemove", moveTip);
+document.addEventListener("mouseover", (e) => {
+  const slot = e.target.closest(".bar-slot.has-game");
+  if (slot) showTip(e, slot);
+});
+document.addEventListener("mouseout", (e) => {
+  const slot = e.target.closest(".bar-slot.has-game");
+  if (slot && !slot.contains(e.relatedTarget)) hideTip();
+});
+document.addEventListener("touchstart", (e) => {
+  const slot = e.target.closest(".bar-slot.has-game");
+  if (slot) showTip(e, slot);
+}, { passive: true });
+
+// Hide broken team logos without inline onerror.
+document.addEventListener("error", (e) => {
+  const img = e.target;
+  if (img instanceof HTMLImageElement && img.classList.contains("team-logo")) {
+    img.style.display = "none";
+  }
+}, true);
 
 // ─────────────────────────────────────────────
 //  LOAD DATA & RENDER
 // ─────────────────────────────────────────────
 async function init() {
-  const content = document.getElementById('content');
+  const content = document.getElementById("content");
   try {
-    const res = await fetch('data.json');
+    const res = await fetch("data.json");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
 
     content.innerHTML =
-      buildConference(data.east, 'Eastern', 'east', data.round, data.lastUpdated) +
-      buildConference(data.west, 'Western', 'west', data.round, data.lastUpdated);
+      renderConference({ teams: data.east, label: "Eastern", cls: "east", round: data.round, lastUpdated: data.lastUpdated }) +
+      renderConference({ teams: data.west, label: "Western", cls: "west", round: data.round, lastUpdated: data.lastUpdated });
 
-    document.getElementById('footer').textContent =
+    document.getElementById("footer").textContent =
       `Data: data.json · Last updated ${data.lastUpdated} · Hover bars for game details`;
-
   } catch (err) {
-    content.innerHTML = `<div class="error">Failed to load data.json — ${err.message}<br><br>Make sure data.json is in the same directory as index.html.</div>`;
+    content.replaceChildren(
+      Object.assign(document.createElement("div"), {
+        className: "error",
+        textContent: `Failed to load data.json — ${err.message}. Make sure data.json is in the same directory as index.html.`,
+      }),
+    );
   }
 }
 

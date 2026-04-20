@@ -1,0 +1,121 @@
+{
+    "lastUpdated": "2026-04-20",
+    "round": "First Round",
+    "east": [
+      {
+        "seed": 1, "abbr": "DET", "name": "Detroit Pistons",
+        "opponent": "ORL", "oppName": "Orlando Magic", "oppSeed": 8,
+        "games": [
+          { "diff": -11, "score": "101-112", "home": true, "date": "Apr 19" }
+        ]
+      },
+      {
+        "seed": 2, "abbr": "BOS", "name": "Boston Celtics",
+        "opponent": "PHI", "oppName": "Philadelphia 76ers", "oppSeed": 7,
+        "games": [
+          { "diff": 32, "score": "123-91", "home": true, "date": "Apr 19" }
+        ]
+      },
+      {
+        "seed": 3, "abbr": "NYK", "name": "New York Knicks",
+        "opponent": "ATL", "oppName": "Atlanta Hawks", "oppSeed": 6,
+        "games": [
+          { "diff": 11, "score": "113-102", "home": true, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 4, "abbr": "CLE", "name": "Cleveland Cavaliers",
+        "opponent": "TOR", "oppName": "Toronto Raptors", "oppSeed": 5,
+        "games": [
+          { "diff": 13, "score": "126-113", "home": true, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 5, "abbr": "TOR", "name": "Toronto Raptors",
+        "opponent": "CLE", "oppName": "Cleveland Cavaliers", "oppSeed": 4,
+        "games": [
+          { "diff": -13, "score": "113-126", "home": false, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 6, "abbr": "ATL", "name": "Atlanta Hawks",
+        "opponent": "NYK", "oppName": "New York Knicks", "oppSeed": 3,
+        "games": [
+          { "diff": -11, "score": "102-113", "home": false, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 7, "abbr": "PHI", "name": "Philadelphia 76ers",
+        "opponent": "BOS", "oppName": "Boston Celtics", "oppSeed": 2,
+        "games": [
+          { "diff": -32, "score": "91-123", "home": false, "date": "Apr 19" }
+        ]
+      },
+      {
+        "seed": 8, "abbr": "ORL", "name": "Orlando Magic",
+        "opponent": "DET", "oppName": "Detroit Pistons", "oppSeed": 1,
+        "games": [
+          { "diff": 11, "score": "112-101", "home": false, "date": "Apr 19" }
+        ]
+      }
+    ],
+    "west": [
+      {
+        "seed": 1, "abbr": "OKC", "name": "Oklahoma City Thunder",
+        "opponent": "PHX", "oppName": "Phoenix Suns", "oppSeed": 8,
+        "games": [
+          { "diff": 35, "score": "119-84", "home": true, "date": "Apr 19" }
+        ]
+      },
+      {
+        "seed": 2, "abbr": "SAS", "name": "San Antonio Spurs",
+        "opponent": "POR", "oppName": "Portland Trail Blazers", "oppSeed": 7,
+        "games": [
+          { "diff": 13, "score": "111-98", "home": true, "date": "Apr 19" }
+        ]
+      },
+      {
+        "seed": 3, "abbr": "DEN", "name": "Denver Nuggets",
+        "opponent": "MIN", "oppName": "Minnesota Timberwolves", "oppSeed": 6,
+        "games": [
+          { "diff": 11, "score": "116-105", "home": true, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 4, "abbr": "LAL", "name": "Los Angeles Lakers",
+        "opponent": "HOU", "oppName": "Houston Rockets", "oppSeed": 5,
+        "games": [
+          { "diff": 9, "score": "107-98", "home": true, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 5, "abbr": "HOU", "name": "Houston Rockets",
+        "opponent": "LAL", "oppName": "Los Angeles Lakers", "oppSeed": 4,
+        "games": [
+          { "diff": -9, "score": "98-107", "home": false, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 6, "abbr": "MIN", "name": "Minnesota Timberwolves",
+        "opponent": "DEN", "oppName": "Denver Nuggets", "oppSeed": 3,
+        "games": [
+          { "diff": -11, "score": "105-116", "home": false, "date": "Apr 18" }
+        ]
+      },
+      {
+        "seed": 7, "abbr": "POR", "name": "Portland Trail Blazers",
+        "opponent": "SAS", "oppName": "San Antonio Spurs", "oppSeed": 2,
+        "games": [
+          { "diff": -13, "score": "98-111", "home": false, "date": "Apr 19" }
+        ]
+      },
+      {
+        "seed": 8, "abbr": "PHX", "name": "Phoenix Suns",
+        "opponent": "OKC", "oppName": "Oklahoma City Thunder", "oppSeed": 1,
+        "games": [
+          { "diff": -35, "score": "84-119", "home": false, "date": "Apr 19" }
+        ]
+      }
+    ]
+  }
+  

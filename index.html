@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 NBA Playoffs — Series Pulse</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #222230;
+    --east: #c8a84b;
+    --west: #4b9dc8;
+    --win: #3ddc84;
+    --loss: #ff4d6d;
+    --muted: #555568;
+    --text: #e8e8f0;
+    --subtext: #888899;
+    --bar-w: 28px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    letter-spacing: 0.08em;
+    background: linear-gradient(120deg, var(--east), var(--text) 50%, var(--west));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  header .subtitle {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    font-size: 0.7rem;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--subtext);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 1px; }
+
+  .conf-section {
+    max-width: 960px;
+    margin: 0 auto 36px;
+  }
+  .conf-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .conf-label.east { color: var(--east); }
+  .conf-label.west { color: var(--west); }
+  .conf-label .round-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--subtext);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  .team-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .team-row.eliminated { opacity: 0.35; }
+
+  .team-name-block {
+    width: 140px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+  }
+  .team-logo {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+  }
+  .team-row.eliminated .team-logo { filter: grayscale(1) opacity(0.4); }
+  .team-text { display: flex; flex-direction: column; }
+  .seed {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--subtext);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .team-abbr {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .series-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--subtext);
+    margin-top: 1px;
+    white-space: nowrap;
+  }
+  .series-status.leading { color: var(--win); }
+  .series-status.trailing { color: var(--loss); }
+  .series-status.tied { color: var(--subtext); }
+
+  .chart-area {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 72px;
+    position: relative;
+    overflow-x: auto;
+  }
+  .chart-area::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: calc(50% - 0.5px);
+    height: 1px;
+    background: var(--border);
+    pointer-events: none;
+  }
+
+  .bar-slot {
+    flex: 0 0 var(--bar-w);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: default;
+  }
+  .bar-slot.has-game { cursor: pointer; }
+
+  .bar {
+    width: calc(var(--bar-w) - 6px);
+    border-radius: 2px 2px 0 0;
+    position: absolute;
+    bottom: 50%;
+  }
+  .bar.win { background: var(--win); }
+  .bar.loss {
+    background: var(--loss);
+    border-radius: 0 0 2px 2px;
+    bottom: auto;
+    top: 50%;
+  }
+
+  .bar-label {
+    position: absolute;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--text);
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
+  /* Round divider — vertical dotted line between rounds */
+  .round-divider {
+    flex: 0 0 1px;
+    height: 100%;
+    border-left: 1px dashed var(--muted);
+    margin: 0 4px;
+    position: relative;
+  }
+
+  .upcoming-badge {
+    width: calc(var(--bar-w) - 6px);
+    height: 2px;
+    background: var(--border);
+    position: absolute;
+    bottom: calc(50% - 1px);
+    border-radius: 1px;
+  }
+
+  .x-axis {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 150px;
+    margin-bottom: 6px;
+    overflow-x: auto;
+  }
+  .x-tick {
+    flex: 0 0 var(--bar-w);
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .x-tick.played { color: var(--subtext); }
+  .x-divider { flex: 0 0 9px; } /* spacer matching round-divider + margins */
+  .x-round-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 48px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--subtext);
+    letter-spacing: 0.1em;
+  }
+  .spinner {
+    display: inline-block;
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--text);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error {
+    text-align: center;
+    padding: 48px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--loss);
+    letter-spacing: 0.05em;
+  }
+
+  .tooltip {
+    position: fixed;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 100;
+    display: none;
+    white-space: nowrap;
+    line-height: 1.6;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 600px) {
+    :root { --bar-w: 22px; }
+    .team-name-block { width: 100px; }
+    .team-logo { width: 30px; height: 30px; }
+    .x-axis { margin-left: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>NBA Playoffs 2026</h1>
+  <div class="subtitle">Series Pulse — Point Differential by Game</div>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--win)"></div> Win (bar up)</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--loss)"></div> Loss (bar down)</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--border);height:2px;width:20px;border-radius:1px"></div> Upcoming</div>
+</div>
+
+<div id="content">
+  <div class="loading"><span class="spinner"></span>Loading playoff data…</div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<div class="footer" id="footer"></div>
+
+<script>
+// ─────────────────────────────────────────────
+//  LOGO MAP  (ESPN CDN — works on open web)
+// ─────────────────────────────────────────────
+const LOGOS = {
+  DET: "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
+  BOS: "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
+  NYK: "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
+  CLE: "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
+  TOR: "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
+  ATL: "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+  PHI: "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
+  ORL: "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
+  OKC: "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
+  SAS: "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
+  DEN: "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
+  LAL: "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+  HOU: "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
+  MIN: "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
+  POR: "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
+  PHX: "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
+};
+
+// Round labels shown as dividers on the x-axis
+// Each entry: { label, gamesPerRound }
+// gamesPerRound = max games in that round (7 for a full series)
+const ROUNDS = [
+  { label: "R1", games: 7 },
+  { label: "R2", games: 7 },
+  { label: "CF", games: 7 },
+  { label: "Finals", games: 7 },
+];
+
+const MAX_DIFF = 40;
+
+// ─────────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────────
+function getSeriesStatus(games) {
+  const wins = games.filter(g => g.diff > 0).length;
+  const losses = games.filter(g => g.diff < 0).length;
+  if (wins === 4) return { label: `WON 4-${losses}`, cls: "leading" };
+  if (losses === 4) return { label: `LOST ${wins}-4`, cls: "trailing" };
+  if (wins > losses) return { label: `${wins}-${losses}`, cls: "leading" };
+  if (losses > wins) return { label: `${wins}-${losses}`, cls: "trailing" };
+  if (wins === 0 && losses === 0) return { label: "0-0", cls: "tied" };
+  return { label: `${wins}-${losses}`, cls: "tied" };
+}
+
+function isEliminated(games) {
+  return games.filter(g => g.diff < 0).length === 4;
+}
+
+function isSeriesWon(games) {
+  return games.filter(g => g.diff > 0).length === 4;
+}
+
+// Work out how many games have been played in each round
+// Round boundary: every 7 games
+function gamesPlayedInRound(roundIndex, games) {
+  const start = roundIndex * 7;
+  return games.slice(start, start + 7);
+}
+
+function buildXAxis(totalGamesPlayed) {
+  let html = '';
+  let gameNum = 0;
+
+  for (let r = 0; r < ROUNDS.length; r++) {
+    const roundStart = r * 7;
+    // Only show rounds that have started or are the next upcoming
+    if (roundStart > totalGamesPlayed + 1) break;
+
+    if (r > 0) {
+      html += `<div class="x-divider"></div>`;
+    }
+    html += `<span class="x-round-label">${ROUNDS[r].label}</span>`;
+
+    for (let g = 0; g < ROUNDS[r].games; g++) {
+      gameNum++;
+      const played = gameNum <= totalGamesPlayed;
+      html += `<div class="x-tick${played ? ' played' : ''}">G${g + 1}</div>`;
+    }
+  }
+  return `<div class="x-axis">${html}</div>`;
+}
+
+function buildBarHTML(team) {
+  const games = team.games;
+  const totalPlayed = games.length;
+  const elim = isEliminated(games);
+  const won = isSeriesWon(games);
+  let slots = '';
+
+  for (let r = 0; r < ROUNDS.length; r++) {
+    const roundStart = r * 7;
+    if (roundStart > totalPlayed + 1) break;
+
+    if (r > 0) {
+      slots += `<div class="round-divider"></div>`;
+    }
+
+    for (let g = 0; g < ROUNDS[r].games; g++) {
+      const idx = roundStart + g;
+      const game = games[idx];
+
+      if (!game) {
+        // Don't show future slots if series is over
+        if (elim || won) {
+          slots += `<div class="bar-slot"></div>`;
+        } else {
+          slots += `<div class="bar-slot"><div class="upcoming-badge"></div></div>`;
+        }
+      } else {
+        const pct = Math.min(Math.abs(game.diff) / MAX_DIFF, 1);
+        const px = Math.max(pct * 34, 4);
+        const cls = game.diff > 0 ? 'win' : 'loss';
+        const sign = game.diff > 0 ? '+' : '';
+        const labelStyle = game.diff > 0
+          ? `bottom: calc(50% + ${px + 2}px)`
+          : `top: calc(50% + ${px + 2}px)`;
+
+        slots += `
+          <div class="bar-slot has-game"
+            data-game="${g + 1}"
+            data-round="${ROUNDS[r].label}"
+            data-score="${game.score}"
+            data-diff="${sign}${game.diff}"
+            data-date="${game.date}"
+            data-result="${game.diff > 0 ? 'W' : 'L'}"
+            onmouseenter="showTip(event,this)"
+            onmouseleave="hideTip()"
+            ontouchstart="showTip(event,this)">
+            <div class="bar ${cls}" style="height:${px}px"></div>
+            <span class="bar-label" style="${labelStyle}">${sign}${game.diff}</span>
+          </div>`;
+      }
+    }
+  }
+  return slots;
+}
+
+function buildTeamRow(team) {
+  const status = getSeriesStatus(team.games);
+  const elim = isEliminated(team.games);
+  const logo = LOGOS[team.abbr] || '';
+  return `
+    <div class="team-row${elim ? ' eliminated' : ''}">
+      <div class="team-name-block">
+        ${logo ? `<img class="team-logo" src="${logo}" alt="${team.abbr}" onerror="this.style.display='none'">` : ''}
+        <div class="team-text">
+          <div class="seed">#${team.seed} vs #${team.oppSeed} ${team.opponent}</div>
+          <div class="team-abbr">${team.abbr}</div>
+          <div class="series-status ${status.cls}">${status.label}</div>
+        </div>
+      </div>
+      <div class="chart-area">${buildBarHTML(team)}</div>
+    </div>`;
+}
+
+function buildConference(teams, label, cls, round, lastUpdated) {
+  const maxGames = Math.max(...teams.map(t => t.games.length));
+  return `
+    <div class="conf-section">
+      <div class="conf-label ${cls}">
+        ${label} Conference
+        <span class="round-tag">${round} · updated ${lastUpdated}</span>
+      </div>
+      ${buildXAxis(maxGames)}
+      ${teams.map(buildTeamRow).join('')}
+    </div>`;
+}
+
+// ─────────────────────────────────────────────
+//  TOOLTIP
+// ─────────────────────────────────────────────
+const tooltip = document.getElementById('tooltip');
+function showTip(e, el) {
+  const result = el.dataset.result;
+  tooltip.innerHTML = `
+    <span style="color:${result === 'W' ? 'var(--win)' : 'var(--loss)'}">${result === 'W' ? '▲ WIN' : '▼ LOSS'}</span>  ${el.dataset.round} Game ${el.dataset.game} · ${el.dataset.date}<br>
+    Score: ${el.dataset.score} &nbsp; Margin: ${el.dataset.diff}
+  `;
+  tooltip.style.display = 'block';
+  moveTip(e);
+}
+function moveTip(e) {
+  const x = (e.touches ? e.touches[0].clientX : e.clientX) + 14;
+  const y = (e.touches ? e.touches[0].clientY : e.clientY) - 10;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+function hideTip() { tooltip.style.display = 'none'; }
+document.addEventListener('mousemove', moveTip);
+
+// ─────────────────────────────────────────────
+//  LOAD DATA & RENDER
+// ─────────────────────────────────────────────
+async function init() {
+  const content = document.getElementById('content');
+  try {
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    content.innerHTML =
+      buildConference(data.east, 'Eastern', 'east', data.round, data.lastUpdated) +
+      buildConference(data.west, 'Western', 'west', data.round, data.lastUpdated);
+
+    document.getElementById('footer').textContent =
+      `Data: data.json · Last updated ${data.lastUpdated} · Hover bars for game details`;
+
+  } catch (err) {
+    content.innerHTML = `<div class="error">Failed to load data.json — ${err.message}<br><br>Make sure data.json is in the same directory as index.html.</div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>

@@ -45,6 +45,39 @@ function seriesStatus(games) {
 const visibleRounds = (totalPlayed) =>
   ROUNDS.filter((_, r) => r * GAMES_PER_ROUND <= totalPlayed + 1);
 
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const shortDate = (d) => `${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}`;
+const longDate  = (d) => d.toLocaleDateString(undefined, {
+  weekday: "long", month: "long", day: "numeric", year: "numeric",
+});
+
+// Collect today's games across both conferences, deduped by matchup.
+function getTodayGames(data, todayKey) {
+  const seen = new Set();
+  const games = [];
+  for (const team of [...data.east, ...data.west]) {
+    for (const g of team.games) {
+      if (g.date !== todayKey) continue;
+      const pairKey = [team.abbr, team.opponent].sort().join("-");
+      if (seen.has(pairKey)) continue;
+      seen.add(pairKey);
+
+      const homeAbbr = g.home ? team.abbr    : team.opponent;
+      const awayAbbr = g.home ? team.opponent : team.abbr;
+
+      let homeScore = null, awayScore = null, homeWon = null;
+      if (g.score && g.diff !== null) {
+        const [teamScore, oppScore] = g.score.split("-").map(Number);
+        homeScore = g.home ? teamScore : oppScore;
+        awayScore = g.home ? oppScore  : teamScore;
+        homeWon   = homeScore > awayScore;
+      }
+      games.push({ homeAbbr, awayAbbr, homeScore, awayScore, homeWon, played: g.diff !== null });
+    }
+  }
+  return games;
+}
+
 // ─────────────────────────────────────────────
 //  RENDERERS (return HTML strings; all dynamic values escaped)
 // ─────────────────────────────────────────────
@@ -126,6 +159,56 @@ function renderTeamRow(team) {
     </div>`;
 }
 
+function renderTodaySide(abbr, side, isWinner) {
+  const logo = logoFor(abbr);
+  const img = logo
+    ? `<img class="team-logo" src="${esc(logo)}" alt="${esc(abbr)}" loading="lazy" referrerpolicy="no-referrer">`
+    : "";
+  const abbrEl = `<div class="today-abbr">${esc(abbr)}</div>`;
+  const inner  = side === "away" ? `${img}${abbrEl}` : `${abbrEl}${img}`;
+  return `<div class="today-side ${side}${isWinner ? " winner" : ""}">${inner}</div>`;
+}
+
+function renderTodayGame(g) {
+  const mid = g.played
+    ? `<div class="today-mid played">
+         <span class="today-score${g.homeWon === false ? " winner" : ""}">${g.awayScore}</span>
+         <span class="today-dash">—</span>
+         <span class="today-score${g.homeWon === true  ? " winner" : ""}">${g.homeScore}</span>
+         <div class="today-status">Final</div>
+       </div>`
+    : `<div class="today-mid">
+         <span class="today-vs">@</span>
+         <div class="today-status">Scheduled</div>
+       </div>`;
+
+  return `
+    <div class="today-game">
+      ${renderTodaySide(g.awayAbbr, "away", g.homeWon === false)}
+      ${mid}
+      ${renderTodaySide(g.homeAbbr, "home", g.homeWon === true)}
+    </div>`;
+}
+
+function renderTodaySection(data, now) {
+  const todayKey  = shortDate(now);
+  const todayLong = longDate(now);
+  const games     = getTodayGames(data, todayKey);
+
+  const body = games.length === 0
+    ? `<div class="today-empty">No games scheduled</div>`
+    : `<div class="today-games count-${games.length}">${games.map(renderTodayGame).join("")}</div>`;
+
+  return `
+    <div class="today-section">
+      <div class="conf-label today">
+        Today
+        <span class="round-tag">${esc(todayLong)}</span>
+      </div>
+      ${body}
+    </div>`;
+}
+
 function renderConference({ teams, label, cls, round, lastUpdated }) {
   const maxGames = Math.max(...teams.map((t) => t.games.length));
   return `
@@ -203,6 +286,7 @@ async function init() {
     const data = await res.json();
 
     content.innerHTML =
+      renderTodaySection(data, new Date()) +
       renderConference({ teams: data.east, label: "Eastern", cls: "east", round: data.round, lastUpdated: data.lastUpdated }) +
       renderConference({ teams: data.west, label: "Western", cls: "west", round: data.round, lastUpdated: data.lastUpdated });
 

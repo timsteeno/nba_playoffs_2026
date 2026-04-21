@@ -159,9 +159,9 @@
       "opponent": "OKC", "oppName": "Oklahoma City Thunder", "oppSeed": 1,
       "games": [
         { "diff": -35, "score": "84-119", "home": false, "date": "Apr 19" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 21" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 24" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 26" }
+        { "diff": null, "score": null, "home": false, "date": "Apr 22" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 25" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 27" }
       ]
     }
   ]

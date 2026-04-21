@@ -78,12 +78,113 @@ header .subtitle {
 }
 .conf-label.east { color: var(--east); }
 .conf-label.west { color: var(--west); }
+.conf-label.today { color: var(--text); }
 .conf-label .round-tag {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   color: var(--subtext);
   font-weight: 400;
   letter-spacing: 0.05em;
+  margin-left: auto;
+}
+
+/* ───────── Today's Games ───────── */
+.today-section {
+  max-width: 960px;
+  margin: 0 auto 36px;
+}
+.today-games {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.today-games.count-1 { grid-template-columns: minmax(0, 420px); justify-content: center; }
+
+.today-game {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.today-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.today-side.home { justify-content: flex-end; }
+.today-side .team-logo { width: 36px; height: 36px; }
+.today-abbr {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--text);
+}
+.today-side.winner .today-abbr { color: var(--win); }
+
+.today-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 70px;
+}
+.today-mid.played {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--subtext);
+  flex-direction: row;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.today-score { color: var(--subtext); }
+.today-score.winner { color: var(--win); }
+.today-dash { color: var(--muted); }
+.today-vs {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  line-height: 1;
+}
+.today-status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+}
+.today-mid.played .today-status { width: 100%; flex-basis: 100%; }
+
+.today-empty {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 18px;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  .today-games { grid-template-columns: 1fr; }
+  .today-games.count-1 { grid-template-columns: 1fr; }
+  .today-side .team-logo { width: 30px; height: 30px; }
+  .today-abbr { font-size: 1.25rem; }
 }
 
 .team-row {

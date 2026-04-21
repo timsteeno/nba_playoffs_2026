@@ -27,7 +27,7 @@
       "opponent": "ATL", "oppName": "Atlanta Hawks", "oppSeed": 6,
       "games": [
         { "diff": 11, "score": "113-102", "home": true, "date": "Apr 18" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 20" },
+        { "diff": -1, "score": "106-107", "home": true, "date": "Apr 20" },
         { "diff": null, "score": null, "home": false, "date": "Apr 23" },
         { "diff": null, "score": null, "home": false, "date": "Apr 25" }
       ]
@@ -37,7 +37,7 @@
       "opponent": "TOR", "oppName": "Toronto Raptors", "oppSeed": 5,
       "games": [
         { "diff": 13, "score": "126-113", "home": true, "date": "Apr 18" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 20" },
+        { "diff": 10, "score": "115-105", "home": true, "date": "Apr 20" },
         { "diff": null, "score": null, "home": false, "date": "Apr 23" },
         { "diff": null, "score": null, "home": false, "date": "Apr 26" }
       ]
@@ -47,7 +47,7 @@
       "opponent": "CLE", "oppName": "Cleveland Cavaliers", "oppSeed": 4,
       "games": [
         { "diff": -13, "score": "113-126", "home": false, "date": "Apr 18" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 20" },
+        { "diff": -10, "score": "105-115", "home": false, "date": "Apr 20" },
         { "diff": null, "score": null, "home": true, "date": "Apr 23" },
         { "diff": null, "score": null, "home": true, "date": "Apr 26" }
       ]
@@ -57,7 +57,7 @@
       "opponent": "NYK", "oppName": "New York Knicks", "oppSeed": 3,
       "games": [
         { "diff": -11, "score": "102-113", "home": false, "date": "Apr 18" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 20" }, 
+        { "diff": 1, "score": "107-106", "home": false, "date": "Apr 20" }, 
         { "diff": null, "score": null, "home": true, "date": "Apr 23" },
         { "diff": null, "score": null, "home": true, "date": "Apr 25" }
       ]
@@ -109,7 +109,7 @@
       "opponent": "MIN", "oppName": "Minnesota Timberwolves", "oppSeed": 6,
       "games": [
         { "diff": 11, "score": "116-105", "home": true, "date": "Apr 18" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 20" },
+        { "diff": -5, "score": "114-119", "home": true, "date": "Apr 20" },
         { "diff": null, "score": null, "home": false, "date": "Apr 23" },
         { "diff": null, "score": null, "home": false, "date": "Apr 25" }
       ]
@@ -139,7 +139,7 @@
       "opponent": "DEN", "oppName": "Denver Nuggets", "oppSeed": 3,
       "games": [
         { "diff": -11, "score": "105-116", "home": false, "date": "Apr 18" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 20" },
+        { "diff": 5, "score": "119-114", "home": false, "date": "Apr 20" },
         { "diff": null, "score": null, "home": true, "date": "Apr 23" },
         { "diff": null, "score": null, "home": true, "date": "Apr 25" }
       ]

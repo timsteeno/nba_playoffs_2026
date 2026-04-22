@@ -45,11 +45,34 @@ function seriesStatus(games) {
 const visibleRounds = (totalPlayed) =>
   ROUNDS.filter((_, r) => r * GAMES_PER_ROUND <= totalPlayed + 1);
 
+const PLAYOFFS_YEAR = 2026;
 const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const shortDate = (d) => `${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}`;
 const longDate  = (d) => d.toLocaleDateString(undefined, {
   weekday: "long", month: "long", day: "numeric", year: "numeric",
 });
+
+/** Parse "Apr 19" into a Date (playoff season year from PLAYOFFS_YEAR). */
+function parseGameDateString(dateStr) {
+  const m = String(dateStr).match(/^([A-Za-z]{3}) (\d{1,2})$/);
+  if (!m) return null;
+  const monthIdx = MONTHS_SHORT.indexOf(m[1]);
+  if (monthIdx < 0) return null;
+  return new Date(PLAYOFFS_YEAR, monthIdx, Number(m[2]));
+}
+
+/** Newest calendar date among games with a final score (diff is set). */
+function getLatestResultDate(data) {
+  let max = null;
+  for (const team of [...data.east, ...data.west]) {
+    for (const g of team.games) {
+      if (g.diff == null) continue;
+      const d = parseGameDateString(g.date);
+      if (d && (!max || d > max)) max = d;
+    }
+  }
+  return max;
+}
 
 // Collect today's games across both conferences, deduped by matchup.
 function getTodayGames(data, todayKey) {
@@ -190,10 +213,10 @@ function renderTodayGame(g) {
     </div>`;
 }
 
-function renderTodaySection(data, now) {
-  const todayKey  = shortDate(now);
-  const todayLong = longDate(now);
-  const games     = getTodayGames(data, todayKey);
+function renderDayGamesSection(data, dayDate, title, labelCls) {
+  const dateKey = shortDate(dayDate);
+  const dateLong = longDate(dayDate);
+  const games = getTodayGames(data, dateKey);
 
   const body = games.length === 0
     ? `<div class="today-empty">No games scheduled</div>`
@@ -201,21 +224,21 @@ function renderTodaySection(data, now) {
 
   return `
     <div class="today-section">
-      <div class="conf-label today">
-        Today
-        <span class="round-tag">${esc(todayLong)}</span>
+      <div class="conf-label ${labelCls}">
+        ${esc(title)}
+        <span class="round-tag">${esc(dateLong)}</span>
       </div>
       ${body}
     </div>`;
 }
 
-function renderConference({ teams, label, cls, round, lastUpdated }) {
+function renderConference({ teams, label, cls, round }) {
   const maxGames = Math.max(...teams.map((t) => t.games.length));
   return `
     <div class="conf-section">
       <div class="conf-label ${cls}">
         ${esc(label)} Conference
-        <span class="round-tag">${esc(round)} · updated ${esc(lastUpdated)}</span>
+        <span class="round-tag">${esc(round)}</span>
       </div>
       ${renderXAxis(maxGames)}
       ${teams.map(renderTeamRow).join("")}
@@ -285,13 +308,24 @@ async function init() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
 
-    content.innerHTML =
-      renderTodaySection(data, new Date()) +
-      renderConference({ teams: data.east, label: "Eastern", cls: "east", round: data.round, lastUpdated: data.lastUpdated }) +
-      renderConference({ teams: data.west, label: "Western", cls: "west", round: data.round, lastUpdated: data.lastUpdated });
+    const now = new Date();
+    const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
-    document.getElementById("footer").textContent =
-      `Data: data.json · Last updated ${data.lastUpdated} · Hover bars for game details`;
+    content.innerHTML =
+      renderDayGamesSection(data, yesterday, "Yesterday", "yesterday") +
+      renderDayGamesSection(data, now, "Today", "today") +
+      renderConference({ teams: data.east, label: "Eastern", cls: "east", round: data.round }) +
+      renderConference({ teams: data.west, label: "Western", cls: "west", round: data.round });
+
+    const latest = getLatestResultDate(data);
+    const lastUpdatedEl = document.getElementById("last-updated");
+    if (lastUpdatedEl) {
+      lastUpdatedEl.textContent = latest
+        ? `Last updated — ${longDate(latest)}`
+        : "";
+    }
+
+    document.getElementById("footer").textContent = "Hover bars for game details";
   } catch (err) {
     content.replaceChildren(
       Object.assign(document.createElement("div"), {

@@ -46,6 +46,16 @@ header .subtitle {
   color: var(--subtext);
   font-family: 'IBM Plex Mono', monospace;
 }
+header .last-updated {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.04em;
+}
+header .last-updated:empty {
+  display: none;
+}
 
 .legend {
   display: flex;
@@ -79,6 +89,7 @@ header .subtitle {
 .conf-label.east { color: var(--east); }
 .conf-label.west { color: var(--west); }
 .conf-label.today { color: var(--text); }
+.conf-label.yesterday { color: var(--subtext); }
 .conf-label .round-tag {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;

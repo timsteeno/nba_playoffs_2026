@@ -117,7 +117,7 @@
       "games": [
         { "diff": 11, "score": "116-105", "home": true, "date": "Apr 18" },
         { "diff": -5, "score": "114-119", "home": true, "date": "Apr 20" },
-        { "diff": -17, "score": "96-113", "home": false, "date": "Apr 23" },
+        { "diff": -17, "score": "96-113", "home": false, "date": "Apr 23", "youtubeId": "tGFwYvbPOtE" },
         { "diff": null, "score": null, "home": false, "date": "Apr 25" },
         { "diff": null, "score": null, "home": false, "date": "Apr 27" }
       ]
@@ -148,7 +148,7 @@
       "games": [
         { "diff": -11, "score": "105-116", "home": false, "date": "Apr 18" },
         { "diff": 5, "score": "119-114", "home": false, "date": "Apr 20" },
-        { "diff": 17, "score": "113-96", "home": true, "date": "Apr 23" },
+        { "diff": 17, "score": "113-96", "home": true, "date": "Apr 23", "youtubeId": "tGFwYvbPOtE" },
         { "diff": null, "score": null, "home": true, "date": "Apr 25" },
         { "diff": null, "score": null, "home": true, "date": "Apr 27" }
       ]

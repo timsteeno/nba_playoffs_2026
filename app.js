@@ -20,6 +20,17 @@ const MAX_DIFF = 40;
 const MAX_BAR_PX = 34;
 const MIN_BAR_PX = 4;
 
+/** Optional per-game in data.json: "youtubeId" (from youtube.com/watch?v=… or youtu.be/…).
+ *  NBA highlight titles often look like:
+ *  #3 NUGGETS at #6 TIMBERWOLVES | FULL GAME 3 HIGHLIGHTS | April 23, 2026
+ */
+function sanitizeYoutubeId(raw) {
+  if (raw == null || raw === "") return "";
+  const s = String(raw).trim();
+  const m = s.match(/^[a-zA-Z0-9_-]{6,32}$/);
+  return m ? m[0] : "";
+}
+
 // ─────────────────────────────────────────────
 //  HELPERS
 // ─────────────────────────────────────────────
@@ -135,6 +146,7 @@ function renderSlot(game, gameIndex, roundLabel, finished) {
   const labelStyle = isWin
     ? `bottom: calc(50% + ${px + 2}px)`
     : `top: calc(50% + ${px + 2}px)`;
+  const yt = sanitizeYoutubeId(game.youtubeId);
   return `
     <div class="bar-slot has-game"
       data-game="${gameIndex + 1}"
@@ -142,7 +154,8 @@ function renderSlot(game, gameIndex, roundLabel, finished) {
       data-score="${esc(game.score)}"
       data-diff="${sign}${game.diff}"
       data-date="${esc(game.date)}"
-      data-result="${isWin ? "W" : "L"}">
+      data-result="${isWin ? "W" : "L"}"
+      ${yt ? `data-youtube-id="${esc(yt)}"` : ""}>
       <div class="bar ${cls}" style="height:${px}px"></div>
       <span class="bar-label" style="${labelStyle}">${sign}${game.diff}</span>
     </div>`;
@@ -155,7 +168,7 @@ function renderBars(team) {
     const divider = r > 0 ? `<div class="round-divider"></div>` : "";
     const slots = Array.from({ length: round.games }, (_, g) => {
       const idx = r * GAMES_PER_ROUND + g;
-      return renderSlot(team.games[idx], g, round.label, finished);
+      return renderSlot(team.games[idx], idx, round.label, finished);
     }).join("");
     return divider + slots;
   }).join("");
@@ -250,41 +263,141 @@ function renderConference({ teams, label, cls, round }) {
 // ─────────────────────────────────────────────
 const tooltip = document.getElementById("tooltip");
 
+let hideTooltipTimer = null;
+
+function clearHideTooltipTimer() {
+  if (hideTooltipTimer != null) {
+    clearTimeout(hideTooltipTimer);
+    hideTooltipTimer = null;
+  }
+}
+
 function moveTip(e) {
   const p = e.touches?.[0] ?? e;
   tooltip.style.left = `${p.clientX + 14}px`;
   tooltip.style.top  = `${p.clientY - 10}px`;
 }
 
+/** Pin the card next to the bar so it does not follow the cursor (avoids “chasing” the popup). */
+function anchorTooltipToSlot(slot) {
+  const place = () => {
+    const rect = slot.getBoundingClientRect();
+    const gap = 10;
+    const margin = 12;
+    const w = tooltip.offsetWidth;
+    const h = tooltip.offsetHeight;
+    let left = rect.right + gap;
+    if (left + w + margin > window.innerWidth) {
+      left = rect.left - gap - w;
+    }
+    if (left < margin) left = margin;
+    let top = rect.top + (rect.height - h) / 2;
+    if (top + h + margin > window.innerHeight) {
+      top = window.innerHeight - h - margin;
+    }
+    if (top < margin) top = margin;
+    tooltip.style.left = `${Math.round(left)}px`;
+    tooltip.style.top = `${Math.round(top)}px`;
+  };
+
+  tooltip.style.display = "block";
+  place();
+  requestAnimationFrame(() => requestAnimationFrame(place));
+}
+
 function showTip(e, el) {
-  const { result, round, game, date, score, diff } = el.dataset;
+  const { result, round, game, date, score, diff, youtubeId } = el.dataset;
   const win = result === "W";
+  const yt = sanitizeYoutubeId(youtubeId);
+
+  clearHideTooltipTimer();
+  tooltip.classList.toggle("tooltip--video", Boolean(yt));
+  tooltip.replaceChildren();
+
+  const head = document.createElement("div");
+  head.className = "tooltip-head";
 
   const arrow = document.createElement("span");
+  arrow.className = "tooltip-result";
   arrow.style.color = `var(--${win ? "win" : "loss"})`;
   arrow.textContent = win ? "▲ WIN" : "▼ LOSS";
 
-  tooltip.replaceChildren(
-    arrow,
-    document.createTextNode(`  ${round} Game ${game} · ${date}`),
-    document.createElement("br"),
-    document.createTextNode(`Score: ${score}   Margin: ${diff}`),
-  );
-  tooltip.style.display = "block";
-  moveTip(e);
+  head.append(arrow, document.createTextNode(`  ${round} Game ${game} · ${date}`));
+
+  const meta = document.createElement("div");
+  meta.className = "tooltip-meta";
+  meta.textContent = `Score: ${score}   Margin: ${diff}`;
+
+  tooltip.append(head, meta);
+
+  if (yt) {
+    const wrap = document.createElement("div");
+    wrap.className = "tooltip-video-wrap";
+
+    const iframe = document.createElement("iframe");
+    iframe.className = "tooltip-video";
+    iframe.width = "320";
+    iframe.height = "180";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.title = "NBA game highlights";
+    iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(yt)}`;
+
+    const ytLink = document.createElement("a");
+    ytLink.className = "tooltip-yt-link";
+    ytLink.href = `https://www.youtube.com/watch?v=${encodeURIComponent(yt)}`;
+    ytLink.target = "_blank";
+    ytLink.rel = "noopener noreferrer";
+    ytLink.textContent = "Open on YouTube";
+
+    wrap.append(iframe, ytLink);
+    tooltip.append(wrap);
+  }
+
+  if (yt) {
+    anchorTooltipToSlot(el);
+  } else {
+    tooltip.style.display = "block";
+    moveTip(e);
+  }
 }
 
-const hideTip = () => { tooltip.style.display = "none"; };
+const hideTip = () => {
+  clearHideTooltipTimer();
+  tooltip.style.display = "none";
+  tooltip.classList.remove("tooltip--video");
+};
 
-document.addEventListener("mousemove", moveTip);
+document.addEventListener("mousemove", (e) => {
+  if (tooltip.style.display === "none") return;
+  if (tooltip.classList.contains("tooltip--video")) return;
+  moveTip(e);
+});
 document.addEventListener("mouseover", (e) => {
   const slot = e.target.closest(".bar-slot.has-game");
   if (slot) showTip(e, slot);
 });
 document.addEventListener("mouseout", (e) => {
   const slot = e.target.closest(".bar-slot.has-game");
-  if (slot && !slot.contains(e.relatedTarget)) hideTip();
+  if (!slot) return;
+  const rt = e.relatedTarget;
+  if (rt && (slot.contains(rt) || (rt instanceof Node && tooltip.contains(rt)))) return;
+
+  if (tooltip.classList.contains("tooltip--video")) {
+    clearHideTooltipTimer();
+    hideTooltipTimer = setTimeout(() => {
+      hideTooltipTimer = null;
+      if (!tooltip.matches(":hover")) hideTip();
+    }, 280);
+    return;
+  }
+  hideTip();
 });
+
+tooltip.addEventListener("mouseenter", clearHideTooltipTimer);
+tooltip.addEventListener("mouseleave", () => hideTip());
 document.addEventListener("touchstart", (e) => {
   const slot = e.target.closest(".bar-slot.has-game");
   if (slot) showTip(e, slot);
@@ -325,7 +438,8 @@ async function init() {
         : "";
     }
 
-    document.getElementById("footer").textContent = "Hover bars for game details";
+    document.getElementById("footer").textContent =
+      "Hover a bar for details; highlight cards sit beside the bar so you can click play. “Video unavailable” is often an IDE preview blocking embeds, a bad id, or embed disabled — try a normal browser or Open on YouTube.";
   } catch (err) {
     content.replaceChildren(
       Object.assign(document.createElement("div"), {

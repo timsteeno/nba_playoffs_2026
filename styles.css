@@ -403,6 +403,57 @@ header .last-updated:empty {
   display: none;
   white-space: nowrap;
   line-height: 1.6;
+  max-width: min(340px, calc(100vw - 24px));
+}
+
+.tooltip.tooltip--video {
+  pointer-events: auto;
+  white-space: normal;
+  padding: 10px 12px 12px;
+}
+
+.tooltip-head {
+  margin-bottom: 4px;
+}
+
+.tooltip-meta {
+  margin-bottom: 8px;
+  color: var(--subtext);
+}
+
+.tooltip--video .tooltip-meta {
+  margin-bottom: 10px;
+}
+
+.tooltip-video-wrap {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin: 0 -2px;
+}
+
+.tooltip-video {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 2px;
+  background: #000;
+}
+
+.tooltip-yt-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--west);
+  text-decoration: none;
+}
+
+.tooltip-yt-link:hover {
+  text-decoration: underline;
 }
 
 .footer {

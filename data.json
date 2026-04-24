@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-21",
+  "lastUpdated": "2026-04-23",
   "round": "First Round",
   "east": [
     {
@@ -9,7 +9,8 @@
         { "diff": -11, "score": "101-112", "home": true, "date": "Apr 19" },
         { "diff": 15, "score": "98-83", "home": true, "date": "Apr 22" },
         { "diff": null, "score": null, "home": false, "date": "Apr 25" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 27" }
+        { "diff": null, "score": null, "home": false, "date": "Apr 27" },
+        { "diff": null, "score": null, "home": false, "date": "Apr 29" }
       ]
     },
     {
@@ -19,7 +20,8 @@
         { "diff": 32, "score": "123-91", "home": true, "date": "Apr 19" },
         { "diff": -14, "score": "97-111", "home": true, "date": "Apr 21" },
         { "diff": null, "score": null, "home": false, "date": "Apr 24" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 26" }
+        { "diff": null, "score": null, "home": false, "date": "Apr 26" },
+        { "diff": null, "score": null, "home": false, "date": "Apr 28" }
       ]
     },
     {
@@ -28,8 +30,9 @@
       "games": [
         { "diff": 11, "score": "113-102", "home": true, "date": "Apr 18" },
         { "diff": -1, "score": "106-107", "home": true, "date": "Apr 20" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 23" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 25" }
+        { "diff": -1, "score": "108-109", "home": false, "date": "Apr 23" },
+        { "diff": null, "score": null, "home": false, "date": "Apr 25" },
+        { "diff": null, "score": null, "home": false, "date": "Apr 28" }
       ]
     },
     {
@@ -38,7 +41,7 @@
       "games": [
         { "diff": 13, "score": "126-113", "home": true, "date": "Apr 18" },
         { "diff": 10, "score": "115-105", "home": true, "date": "Apr 20" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 23" },
+        { "diff": -22, "score": "104-126", "home": false, "date": "Apr 23" },
         { "diff": null, "score": null, "home": false, "date": "Apr 26" }
       ]
     },
@@ -48,7 +51,7 @@
       "games": [
         { "diff": -13, "score": "113-126", "home": false, "date": "Apr 18" },
         { "diff": -10, "score": "105-115", "home": false, "date": "Apr 20" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 23" },
+        { "diff": 22, "score": "126-104", "home": true, "date": "Apr 23" },
         { "diff": null, "score": null, "home": true, "date": "Apr 26" }
       ]
     },
@@ -58,8 +61,9 @@
       "games": [
         { "diff": -11, "score": "102-113", "home": false, "date": "Apr 18" },
         { "diff": 1, "score": "107-106", "home": false, "date": "Apr 20" }, 
-        { "diff": null, "score": null, "home": true, "date": "Apr 23" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 25" }
+        { "diff": 1, "score": "109-108", "home": true, "date": "Apr 23" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 25" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 28" }
       ]
     },
     {
@@ -69,7 +73,8 @@
         { "diff": -32, "score": "91-123", "home": false, "date": "Apr 19" },
         { "diff": 14, "score": "111-97", "home": false, "date": "Apr 21" },
         { "diff": null, "score": null, "home": true, "date": "Apr 24" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 26" }
+        { "diff": null, "score": null, "home": true, "date": "Apr 26" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 28" }
       ]
     },
     {
@@ -79,7 +84,8 @@
         { "diff": 11, "score": "112-101", "home": false, "date": "Apr 19" },
         { "diff": -15, "score": "83-98", "home": false, "date": "Apr 22" },
         { "diff": null, "score": null, "home": true, "date": "Apr 25" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 27" }
+        { "diff": null, "score": null, "home": true, "date": "Apr 27" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 29" }
       ]
     }
   ],
@@ -101,7 +107,8 @@
         { "diff": 13, "score": "111-98", "home": true, "date": "Apr 19" },
         { "diff": -3, "score": "103-106", "home": true, "date": "Apr 21" },
         { "diff": null, "score": null, "home": false, "date": "Apr 24" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 26" }
+        { "diff": null, "score": null, "home": false, "date": "Apr 26" },
+        { "diff": null, "score": null, "home": false, "date": "Apr 28" }
       ]
     },
     {
@@ -110,8 +117,9 @@
       "games": [
         { "diff": 11, "score": "116-105", "home": true, "date": "Apr 18" },
         { "diff": -5, "score": "114-119", "home": true, "date": "Apr 20" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 23" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 25" }
+        { "diff": -17, "score": "96-113", "home": false, "date": "Apr 23" },
+        { "diff": null, "score": null, "home": false, "date": "Apr 25" },
+        { "diff": null, "score": null, "home": false, "date": "Apr 27" }
       ]
     },
     {
@@ -140,8 +148,9 @@
       "games": [
         { "diff": -11, "score": "105-116", "home": false, "date": "Apr 18" },
         { "diff": 5, "score": "119-114", "home": false, "date": "Apr 20" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 23" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 25" }
+        { "diff": 17, "score": "113-96", "home": true, "date": "Apr 23" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 25" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 27" }
       ]
     },
     {
@@ -151,7 +160,8 @@
         { "diff": -13, "score": "98-111", "home": false, "date": "Apr 19" },
         { "diff": 3, "score": "106-103", "home": false, "date": "Apr 21" },
         { "diff": null, "score": null, "home": true, "date": "Apr 24" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 26" }
+        { "diff": null, "score": null, "home": true, "date": "Apr 26" },
+        { "diff": null, "score": null, "home": true, "date": "Apr 28" }
       ]
     },
     {

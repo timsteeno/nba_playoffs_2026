@@ -366,6 +366,10 @@ function showTip(e, el) {
 
 const hideTip = () => {
   clearHideTooltipTimer();
+  const frame = tooltip.querySelector("iframe.tooltip-video");
+  if (frame) {
+    frame.src = "about:blank";
+  }
   tooltip.style.display = "none";
   tooltip.classList.remove("tooltip--video");
 };

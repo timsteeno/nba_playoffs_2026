@@ -443,7 +443,7 @@ async function init() {
     }
 
     document.getElementById("footer").textContent =
-      "Hover a bar for details; highlight cards sit beside the bar so you can click play. “Video unavailable” is often an IDE preview blocking embeds, a bad id, or embed disabled — try a normal browser or Open on YouTube.";
+      "Hover a bar for details.";
   } catch (err) {
     content.replaceChildren(
       Object.assign(document.createElement("div"), {

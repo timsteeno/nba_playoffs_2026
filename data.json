@@ -8,7 +8,7 @@
       "games": [
         { "diff": -11, "score": "101-112", "home": true, "date": "Apr 19", "youtubeId": "R_vR5eLI_rc"},
         { "diff": 15, "score": "98-83", "home": true, "date": "Apr 22", "youtubeId": "oKkhTdPR3DA"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 25" },
+        { "diff": -8, "score": "105-113", "home": false, "date": "Apr 25", "youtubeId": "xDZGWKwqxRI"},
         { "diff": null, "score": null, "home": false, "date": "Apr 27" },
         { "diff": null, "score": null, "home": false, "date": "Apr 29" }
       ]
@@ -31,7 +31,7 @@
         { "diff": 11, "score": "113-102", "home": true, "date": "Apr 18", "youtubeId": "cDpGq-xlE6Y"},
         { "diff": -1, "score": "106-107", "home": true, "date": "Apr 20", "youtubeId": "frvbdAT5l7c"},
         { "diff": -1, "score": "108-109", "home": false, "date": "Apr 23","youtubeId": "vmMWvXMl-yc"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 25" },
+        { "diff": 16, "score": "114-98", "home": false, "date": "Apr 25", "youtubeId": "Hz2uEZ7oow"},
         { "diff": null, "score": null, "home": false, "date": "Apr 28" }
       ]
     },
@@ -42,7 +42,9 @@
         { "diff": 13, "score": "126-113", "home": true, "date": "Apr 18", "youtubeId": "CfoT98jQkWE"},
         { "diff": 10, "score": "115-105", "home": true, "date": "Apr 20", "youtubeId": "0ziLIqPZkK8"},
         { "diff": -22, "score": "104-126", "home": false, "date": "Apr 23" ,"youtubeId": "cQJ6TdLtoIs"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 26" }
+        { "diff": -4, "score": "89-93", "home": false, "date": "Apr 26", "youtubeId": "0kKYyd-bm7A"},
+        { "diff": null, "score": null, "home": false, "date": "Apr 29" },
+        { "diff": null, "score": null, "home": false, "date": "May 1" }
       ]
     },
     {
@@ -52,7 +54,9 @@
         { "diff": -13, "score": "113-126", "home": false, "date": "Apr 18", "youtubeId": "CfoT98jQkWE"},
         { "diff": -10, "score": "105-115", "home": false, "date": "Apr 20", "youtubeId": "0ziLIqPZkK8"},
         { "diff": 22, "score": "126-104", "home": true, "date": "Apr 23" ,"youtubeId": "cQJ6TdLtoIs"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 26" }
+        { "diff": 4, "score": "93-89", "home": true, "date": "Apr 26", "youtubeId": "0kKYyd-bm7A"},
+        { "diff": null, "score": null, "home": true, "date": "Apr 29" },
+        { "diff": null, "score": null, "home": true, "date": "May 1" }
       ]
     },
     {
@@ -62,8 +66,9 @@
         { "diff": -11, "score": "102-113", "home": false, "date": "Apr 18", "youtubeId": "cDpGq-xlE6Y"},
         { "diff": 1, "score": "107-106", "home": false, "date": "Apr 20", "youtubeId": "frvbdAT5l7c"}, 
         { "diff": 1, "score": "109-108", "home": true, "date": "Apr 23", "youtubeId": "vmMWvXMl-yc"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 25" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 28" }
+        { "diff": -16, "score": "98-114", "home": true, "date": "Apr 25", "youtubeId": "Hz2uEZ7oow"},
+        { "diff": null, "score": null, "home": true, "date": "Apr 28" },
+        { "diff": null, "score": null, "home": true, "date": "May 1" }
       ]
     },
     {
@@ -72,7 +77,7 @@
       "games": [
         { "diff": -32, "score": "91-123", "home": false, "date": "Apr 19", "youtubeId": "Sv9N4IPSYzA"},
         { "diff": 14, "score": "111-97", "home": false, "date": "Apr 21", "youtubeId": "xeumsFo8qiM"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 24", "youtubeId": "xgao4BvqHbY"},
+        { "diff": -8, "score": "100-108", "home": true, "date": "Apr 24", "youtubeId": "xgao4BvqHbY"},
         { "diff": null, "score": null, "home": true, "date": "Apr 26" },
         { "diff": null, "score": null, "home": true, "date": "Apr 28" }
       ]
@@ -83,7 +88,7 @@
       "games": [
         { "diff": 11, "score": "112-101", "home": false, "date": "Apr 19", "youtubeId": "R_vR5eLI_rc"},
         { "diff": -15, "score": "83-98", "home": false, "date": "Apr 22", "youtubeId": "oKkhTdPR3DA"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 25" },
+        { "diff": 8, "score": "113-105", "home": true, "date": "Apr 25", "youtubeId": "xDZGWKwqxRI"},
         { "diff": null, "score": null, "home": true, "date": "Apr 27" },
         { "diff": null, "score": null, "home": true, "date": "Apr 29" }
       ]
@@ -96,7 +101,7 @@
       "games": [
         { "diff": 35, "score": "119-84", "home": true, "date": "Apr 19", "youtubeId": "YrwJN0EWx9o"},
         { "diff": 13, "score": "120-107", "home": true, "date": "Apr 22", "youtubeId": "8OBEkoMb2rU"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 25" },
+        { "diff": 12, "score": "121-109", "home": false, "date": "Apr 25", "youtubeId": "Jv3lp2ojSr0"},
         { "diff": null, "score": null, "home": false, "date": "Apr 27" }
       ]
     },
@@ -107,7 +112,7 @@
         { "diff": 13, "score": "111-98", "home": true, "date": "Apr 19", "youtubeId": "eadbv_XnpX0"},
         { "diff": -3, "score": "103-106", "home": true, "date": "Apr 21", "youtubeId": "X49TSoptf-c"},
         { "diff": 12, "score": "120-108", "home": false, "date": "Apr 24", "youtubeId": "yfmsGK_PdaM"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 26" },
+        { "diff": 21, "score": "114-93", "home": false, "date": "Apr 26", "youtubeId": ""},
         { "diff": null, "score": null, "home": false, "date": "Apr 28" }
       ]
     },
@@ -118,7 +123,7 @@
         { "diff": 11, "score": "116-105", "home": true, "date": "Apr 18", "youtubeId": "CAsKkFjBIEo"},
         { "diff": -5, "score": "114-119", "home": true, "date": "Apr 20", "youtubeId": "e7_kZK41tNc"},
         { "diff": -17, "score": "96-113", "home": false, "date": "Apr 23", "youtubeId": "tGFwYvbPOtE" },
-        { "diff": null, "score": null, "home": false, "date": "Apr 25" },
+        { "diff": -16, "score": "96-112", "home": false, "date": "Apr 25", "youtubeId": "cSKA-dQlnc8"},
         { "diff": null, "score": null, "home": false, "date": "Apr 27" }
       ]
     },
@@ -149,7 +154,7 @@
         { "diff": -11, "score": "105-116", "home": false, "date": "Apr 18", "youtubeId": "CAsKkFjBIEo"},
         { "diff": 5, "score": "119-114", "home": false, "date": "Apr 20", "youtubeId": "WMDnpbs0bEI"},
         { "diff": 17, "score": "113-96", "home": true, "date": "Apr 23", "youtubeId": "tGFwYvbPOtE" },
-        { "diff": null, "score": null, "home": true, "date": "Apr 25" },
+        { "diff": 16, "score": "112-96", "home": true, "date": "Apr 25", "youtubeId": "cSKA-dQlnc8"},
         { "diff": null, "score": null, "home": true, "date": "Apr 27" }
       ]
     },
@@ -160,7 +165,7 @@
         { "diff": -13, "score": "98-111", "home": false, "date": "Apr 19", "youtubeId": "eadbv_XnpX0"},
         { "diff": 3, "score": "106-103", "home": false, "date": "Apr 21", "youtubeId": "X49TSoptf-c"},
         { "diff": -12, "score": "108-120", "home": true, "date": "Apr 24", "youtubeId": "yfmsGK_PdaM"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 26" },
+        { "diff": -21, "score": "93-114", "home": true, "date": "Apr 26", "youtubeId": ""},
         { "diff": null, "score": null, "home": true, "date": "Apr 28" }
       ]
     },
@@ -170,7 +175,7 @@
       "games": [
         { "diff": -35, "score": "84-119", "home": false, "date": "Apr 19", "youtubeId": "YrwJN0EWx9o"},
         { "diff": -13, "score": "107-120", "home": false, "date": "Apr 22", "youtubeId": "8OBEkoMb2rU"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 25" },
+        { "diff": -12, "score": "109-121", "home": true, "date": "Apr 25", "youtubeId": "Jv3lp2ojSr0"},
         { "diff": null, "score": null, "home": true, "date": "Apr 27" }
       ]
     }

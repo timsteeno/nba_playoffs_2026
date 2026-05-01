@@ -90,7 +90,8 @@ function getTodayGames(data, todayKey) {
   const seen = new Set();
   const games = [];
   for (const team of [...data.east, ...data.west]) {
-    for (const g of team.games) {
+    for (let gameIndex = 0; gameIndex < team.games.length; gameIndex++) {
+      const g = team.games[gameIndex];
       if (g.date !== todayKey) continue;
       const pairKey = [team.abbr, team.opponent].sort().join("-");
       if (seen.has(pairKey)) continue;
@@ -106,7 +107,43 @@ function getTodayGames(data, todayKey) {
         awayScore = g.home ? oppScore  : teamScore;
         homeWon   = homeScore > awayScore;
       }
-      games.push({ homeAbbr, awayAbbr, homeScore, awayScore, homeWon, played: g.diff !== null });
+
+      // Series standing as-of the game: for scheduled games show record entering the game;
+      // for played games show record after the final.
+      const includeCurrent = g.diff !== null;
+      let winsA = 0;
+      let winsB = 0;
+      for (let i = 0; i < team.games.length; i++) {
+        const gg = team.games[i];
+        if (gg.diff == null) continue;
+        if (!includeCurrent && i >= gameIndex) continue;
+        if (includeCurrent && i > gameIndex) continue;
+        if (gg.diff > 0) winsA++;
+        else if (gg.diff < 0) winsB++;
+      }
+
+      let seriesLabel = `Tied ${winsA}-${winsB}`;
+      const hi = Math.max(winsA, winsB);
+      const lo = Math.min(winsA, winsB);
+      const seriesEnded = includeCurrent && hi === 4;
+      if (winsA !== winsB) {
+        const leader = winsA > winsB ? team.abbr : team.opponent;
+        seriesLabel = hi === 4
+          ? `${leader} won ${hi}-${lo}`
+          : `${leader} leads ${hi}-${lo}`;
+      }
+
+      games.push({
+        homeAbbr,
+        awayAbbr,
+        homeScore,
+        awayScore,
+        homeWon,
+        played: g.diff !== null,
+        gameNumber: gameIndex + 1,
+        seriesLabel,
+        seriesEnded,
+      });
     }
   }
   return games;
@@ -206,6 +243,7 @@ function renderTodaySide(abbr, side, isWinner) {
 }
 
 function renderTodayGame(g) {
+  const meta = `<div class="today-meta">Game ${g.gameNumber} · ${esc(g.seriesLabel)}</div>`;
   const mid = g.played
     ? `<div class="today-mid played">
          <span class="today-score${g.homeWon === false ? " winner" : ""}">${g.awayScore}</span>
@@ -219,7 +257,8 @@ function renderTodayGame(g) {
        </div>`;
 
   return `
-    <div class="today-game">
+    <div class="today-game${g.seriesEnded ? " series-final" : ""}">
+      ${meta}
       ${renderTodaySide(g.awayAbbr, "away", g.homeWon === false)}
       ${mid}
       ${renderTodaySide(g.homeAbbr, "home", g.homeWon === true)}

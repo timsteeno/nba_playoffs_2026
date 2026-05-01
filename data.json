@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-24",
+  "lastUpdated": "2026-04-28",
   "round": "First Round",
   "east": [
     {
@@ -10,9 +10,9 @@
         { "diff": 15, "score": "98-83", "home": true, "date": "Apr 22", "youtubeId": "oKkhTdPR3DA"},
         { "diff": -8, "score": "105-113", "home": false, "date": "Apr 25", "youtubeId": "xDZGWKwqxRI"},
         { "diff": -6, "score": "88-94", "home": false, "date": "Apr 27", "youtubeId": "5yUo-kK9j1o"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 29" },
+        { "diff": 7, "score": "116-109", "home": true, "date": "Apr 29","youtubeId": "Qxsa7ZJsLLI"},
         { "diff": null, "score": null, "home": false, "date": "May 1" },
-        { "diff": null, "score": null, "home": false, "date": "May 3" }
+        { "diff": null, "score": null, "home": true, "date": "May 3" }
       ]
     },
     {
@@ -23,9 +23,9 @@
         { "diff": -14, "score": "97-111", "home": true, "date": "Apr 21", "youtubeId": "xeumsFo8qiM"},
         { "diff": 8, "score": "108-100", "home": false, "date": "Apr 24", "youtubeId": "xgao4BvqHbY"},
         { "diff": 32, "score": "128-96", "home": false, "date": "Apr 26", "youtubeId": "gdt0C0NGhjg"},
-        { "diff": -16, "score": "97-113", "home": false, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
+        { "diff": -16, "score": "97-113", "home": true, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
         { "diff": null, "score": null, "home": false, "date": "Apr 30" },
-        { "diff": null, "score": null, "home": false, "date": "May 2" }
+        { "diff": null, "score": null, "home": true, "date": "May 2" }
       ]
     },
     {
@@ -36,9 +36,9 @@
         { "diff": -1, "score": "106-107", "home": true, "date": "Apr 20", "youtubeId": "frvbdAT5l7c"},
         { "diff": -1, "score": "108-109", "home": false, "date": "Apr 23","youtubeId": "vmMWvXMl-yc"},
         { "diff": 16, "score": "114-98", "home": false, "date": "Apr 25", "youtubeId": "Hz2uEZ7oow"},
-        { "diff": 19, "score": "126-97", "home": false, "date": "Apr 28", "youtubeId": "_gOcjhr7cuE"},
+        { "diff": 29, "score": "126-97", "home": true, "date": "Apr 28", "youtubeId": "_gOcjhr7cuE"},
         { "diff": null, "score": null, "home": false, "date": "Apr 30" },
-        { "diff": null, "score": null, "home": false, "date": "May 2" }
+        { "diff": null, "score": null, "home": true, "date": "May 2" }
       ]
     },
     {
@@ -49,9 +49,9 @@
         { "diff": 10, "score": "115-105", "home": true, "date": "Apr 20", "youtubeId": "0ziLIqPZkK8"},
         { "diff": -22, "score": "104-126", "home": false, "date": "Apr 23" ,"youtubeId": "cQJ6TdLtoIs"},
         { "diff": -4, "score": "89-93", "home": false, "date": "Apr 26", "youtubeId": "0kKYyd-bm7A"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 29" },
+        { "diff": 5, "score": "125-120", "home": true, "date": "Apr 29", "youtubeId": "Qnof3u6sJtQ"},
         { "diff": null, "score": null, "home": false, "date": "May 1" },
-        { "diff": null, "score": null, "home": false, "date": "May 3" }
+        { "diff": null, "score": null, "home": true, "date": "May 3" }
       ]
     },
     {
@@ -62,9 +62,9 @@
         { "diff": -10, "score": "105-115", "home": false, "date": "Apr 20", "youtubeId": "0ziLIqPZkK8"},
         { "diff": 22, "score": "126-104", "home": true, "date": "Apr 23" ,"youtubeId": "cQJ6TdLtoIs"},
         { "diff": 4, "score": "93-89", "home": true, "date": "Apr 26", "youtubeId": "0kKYyd-bm7A"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 29" },
+        { "diff": -5, "score": "120-125", "home": false, "date": "Apr 29", "youtubeId": "Qnof3u6sJtQ"},
         { "diff": null, "score": null, "home": true, "date": "May 1" },
-        { "diff": null, "score": null, "home": true, "date": "May 3" }
+        { "diff": null, "score": null, "home": false, "date": "May 3" }
       ]
     },
     {
@@ -75,9 +75,9 @@
         { "diff": 1, "score": "107-106", "home": false, "date": "Apr 20", "youtubeId": "frvbdAT5l7c"}, 
         { "diff": 1, "score": "109-108", "home": true, "date": "Apr 23", "youtubeId": "vmMWvXMl-yc"},
         { "diff": -16, "score": "98-114", "home": true, "date": "Apr 25", "youtubeId": "Hz2uEZ7oow"},
-        { "diff": 19, "score": "114-98", "home": true, "date": "Apr 28", "youtubeId": "_gOcjhr7cuE"},
+        { "diff": -29, "score": "97-126", "home": false, "date": "Apr 28", "youtubeId": "_gOcjhr7cuE"},
         { "diff": null, "score": null, "home": true, "date": "May 1" },
-        { "diff": null, "score": null, "home": true, "date": "May 3" }
+        { "diff": null, "score": null, "home": false, "date": "May 3" }
       ]
     },
     {
@@ -88,9 +88,9 @@
         { "diff": 14, "score": "111-97", "home": false, "date": "Apr 21", "youtubeId": "xeumsFo8qiM"},
         { "diff": -8, "score": "100-108", "home": true, "date": "Apr 24", "youtubeId": "xgao4BvqHbY"},
         { "diff": -32, "score": "96-128", "home": true, "date": "Apr 26", "youtubeId": "Kv_43B0Q5p4"},
-        { "diff": 16, "score": "113-97", "home": true, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
+        { "diff": 16, "score": "113-97", "home": false, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
         { "diff": null, "score": null, "home": true, "date": "Apr 30" },
-        { "diff": null, "score": null, "home": true, "date": "May 2" }
+        { "diff": null, "score": null, "home": false, "date": "May 2" }
       ]
     },
     {
@@ -100,10 +100,10 @@
         { "diff": 11, "score": "112-101", "home": false, "date": "Apr 19", "youtubeId": "R_vR5eLI_rc"},
         { "diff": -15, "score": "83-98", "home": false, "date": "Apr 22", "youtubeId": "oKkhTdPR3DA"},
         { "diff": 8, "score": "113-105", "home": true, "date": "Apr 25", "youtubeId": "xDZGWKwqxRI"},
-        { "diff": 6, "score": "94-88", "home": true, "date": "Apr 27", "youtubeId": "wqBQ7vL4a_A"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 29" },
+        { "diff": 6, "score": "94-88", "home": true, "date": "Apr 27", "youtubeId": "5yUo-kK9j1o"},
+        { "diff": -7, "score": "109-116", "home": false, "date": "Apr 29", "youtubeId": "Qxsa7ZJsLLI"},
         { "diff": null, "score": null, "home": true, "date": "May 1" },
-        { "diff": null, "score": null, "home": true, "date": "May 3" }
+        { "diff": null, "score": null, "home": false, "date": "May 3" }
       ]
     }
   ],
@@ -126,7 +126,7 @@
         { "diff": -3, "score": "103-106", "home": true, "date": "Apr 21", "youtubeId": "X49TSoptf-c"},
         { "diff": 12, "score": "120-108", "home": false, "date": "Apr 24", "youtubeId": "yfmsGK_PdaM"},
         { "diff": 21, "score": "114-93", "home": false, "date": "Apr 26", "youtubeId": "F2ne3WZuCQo"},
-        { "diff": 19, "score": "114-95", "home": false, "date": "Apr 28", "youtubeId": "3Iug_1vp-Kk"}
+        { "diff": 19, "score": "114-95", "home": true, "date": "Apr 28", "youtubeId": "3Iug_1vp-Kk"}
       ]
     },
     {
@@ -137,9 +137,9 @@
         { "diff": -5, "score": "114-119", "home": true, "date": "Apr 20", "youtubeId": "e7_kZK41tNc"},
         { "diff": -17, "score": "96-113", "home": false, "date": "Apr 23", "youtubeId": "tGFwYvbPOtE" },
         { "diff": -16, "score": "96-112", "home": false, "date": "Apr 25", "youtubeId": "cSKA-dQlnc8"},
-        { "diff": 9, "score": "131-122", "home": false, "date": "Apr 27", "youtubeId": "wwArFQFol6E"},
+        { "diff": 9, "score": "131-122", "home": true, "date": "Apr 27", "youtubeId": "wwArFQFol6E"},
         { "diff": null, "score": null, "home": false, "date": "Apr 30" },
-        { "diff": null, "score": null, "home": false, "date": "May 2" }
+        { "diff": null, "score": null, "home": true, "date": "May 2" }
       ]
     },
     {
@@ -150,9 +150,9 @@
         { "diff": 7, "score": "101-94", "home": true, "date": "Apr 21", "youtubeId": "S4OAzXJWSWs"},
         { "diff": 4, "score": "112-108", "home": false, "date": "Apr 24", "youtubeId": "s6w074klwwk"},
         { "diff": -19, "score": "96-115", "home": false, "date": "Apr 26", "youtubeId": "nG9DczGPorI"},
-        { "diff": null, "score": null, "home": false, "date": "Apr 29" },
+        { "diff": -6, "score": "93-99", "home": true, "date": "Apr 29", "youtubeId": "MZaIMc1r0Uo"},
         { "diff": null, "score": null, "home": false, "date": "May 1" },
-        { "diff": null, "score": null, "home": false, "date": "May 3" }
+        { "diff": null, "score": null, "home": true, "date": "May 3" }
       ]
     },
     {
@@ -163,9 +163,9 @@
         { "diff": -7, "score": "94-101", "home": false, "date": "Apr 21", "youtubeId": "S4OAzXJWSWs"},
         { "diff": -4, "score": "108-112", "home": true, "date": "Apr 24", "youtubeId": "s6w074klwwk"},
         { "diff": 19, "score": "115-96", "home": true, "date": "Apr 26", "youtubeId": "nG9DczGPorI"},
-        { "diff": null, "score": null, "home": true, "date": "Apr 29" },
+        { "diff": 6, "score": "99-93", "home": false, "date": "Apr 29", "youtubeId": "MZaIMc1r0Uo"},
         { "diff": null, "score": null, "home": true, "date": "May 1" },
-        { "diff": null, "score": null, "home": true, "date": "May 3" }
+        { "diff": null, "score": null, "home": false, "date": "May 3" }
       ]
     },
     {
@@ -176,9 +176,9 @@
         { "diff": 5, "score": "119-114", "home": false, "date": "Apr 20", "youtubeId": "WMDnpbs0bEI"},
         { "diff": 17, "score": "113-96", "home": true, "date": "Apr 23", "youtubeId": "tGFwYvbPOtE" },
         { "diff": 16, "score": "112-96", "home": true, "date": "Apr 25", "youtubeId": "cSKA-dQlnc8"},
-        { "diff": -12, "score": "113-125", "home": true, "date": "Apr 27", "youtubeId": "wwArFQFol6E"},
+        { "diff": -12, "score": "113-125", "home": false, "date": "Apr 27", "youtubeId": "wwArFQFol6E"},
         { "diff": null, "score": null, "home": true, "date": "Apr 30" },
-        { "diff": null, "score": null, "home": true, "date": "May 2" }
+        { "diff": null, "score": null, "home": false, "date": "May 2" }
       ]
     },
     {
@@ -189,7 +189,7 @@
         { "diff": 3, "score": "106-103", "home": false, "date": "Apr 21", "youtubeId": "X49TSoptf-c"},
         { "diff": -12, "score": "108-120", "home": true, "date": "Apr 24", "youtubeId": "yfmsGK_PdaM"},
         { "diff": -21, "score": "93-114", "home": true, "date": "Apr 26", "youtubeId": "F2ne3WZuCQo"},
-        { "diff": -19, "score": "95-114", "home": true, "date": "Apr 28", "youtubeId": "3Iug_1vp-Kk"}
+        { "diff": -19, "score": "95-114", "home": false, "date": "Apr 28", "youtubeId": "3Iug_1vp-Kk"}
       ]
     },
     {

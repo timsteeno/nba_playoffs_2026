@@ -123,6 +123,22 @@ header .last-updated:empty {
   min-width: 0;
 }
 
+.today-game.series-final {
+  border-color: var(--east);
+  box-shadow: 0 0 0 1px rgba(200, 168, 75, 0.22);
+}
+
+.today-meta {
+  grid-column: 1 / -1;
+  margin-bottom: -4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 .today-side {
   display: flex;
   align-items: center;

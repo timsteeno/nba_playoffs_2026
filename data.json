@@ -25,7 +25,7 @@
         { "diff": 32, "score": "128-96", "home": false, "date": "Apr 26", "youtubeId": "gdt0C0NGhjg"},
         { "diff": -16, "score": "97-113", "home": true, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
         { "diff": -13, "score": "93-106", "home": false, "date": "Apr 30", "youtubeId": "I5sKEmcuwcE"},
-        { "diff": null, "score": null, "home": true, "date": "May 2" }
+        { "diff": -9, "score": "100-109", "home": true, "date": "May 2" }
       ]
     },
     {
@@ -88,7 +88,7 @@
         { "diff": -32, "score": "96-128", "home": true, "date": "Apr 26", "youtubeId": "Kv_43B0Q5p4"},
         { "diff": 16, "score": "113-97", "home": false, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
         { "diff": 13, "score": "106-93", "home": true, "date": "Apr 30", "youtubeId": "I5sKEmcuwcE"},
-        { "diff": null, "score": null, "home": false, "date": "May 2" }
+        { "diff": 9, "score": "109-100", "home": false, "date": "May 2", "youtubeId": "3XJp-QFgU7s"}
       ]
     },
     {

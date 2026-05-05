@@ -40,12 +40,88 @@ const esc = (v) => String(v).replace(/[&<>"']/g, (c) => (
 
 const countWins   = (games) => games.filter((g) => g.diff > 0).length;
 const countLosses = (games) => games.filter((g) => g.diff < 0).length;
-const isSeriesWon  = (games) => countWins(games)   === 4;
-const isEliminated = (games) => countLosses(games) === 4;
+
+/** Split timeline into best-of-7 segments: each ends after 4 wins or 4 losses among finals; unplayed tail stays in the last segment. */
+function splitIntoSeriesSegments(games) {
+  if (!games?.length) return [];
+  const segments = [];
+  let start = 0;
+  while (start < games.length) {
+    let w = 0;
+    let l = 0;
+    let i = start;
+    for (; i < games.length; i++) {
+      const g = games[i];
+      if (g.diff == null) {
+        segments.push(games.slice(start, i + 1));
+        start = i + 1;
+        break;
+      }
+      if (g.diff > 0) w++;
+      else if (g.diff < 0) l++;
+      if (w === 4 || l === 4) {
+        segments.push(games.slice(start, i + 1));
+        start = i + 1;
+        break;
+      }
+    }
+    if (i >= games.length && start < games.length) {
+      segments.push(games.slice(start));
+      break;
+    }
+    if (start >= games.length) break;
+  }
+  return segments;
+}
+
+function segmentSeriesFinished(seg) {
+  if (!seg?.length) return false;
+  const played = seg.filter((g) => g.diff != null);
+  const w = countWins(played);
+  const l = countLosses(played);
+  return w === 4 || l === 4;
+}
+
+/** Out of the playoffs only after losing a completed series (four losses in one segment), not four lifetime losses across rounds. */
+function isEliminated(games) {
+  const segs = splitIntoSeriesSegments(games);
+  for (const seg of segs) {
+    if (!segmentSeriesFinished(seg)) continue;
+    const played = seg.filter((g) => g.diff != null);
+    if (countLosses(played) === 4) return true;
+  }
+  return false;
+}
+
+/** Flat index → segment that contains it (for “Today” standings). */
+function segmentAtFlatIndex(games, flatIdx) {
+  const segs = splitIntoSeriesSegments(games);
+  let off = 0;
+  for (const seg of segs) {
+    if (flatIdx >= off && flatIdx < off + seg.length) {
+      return { segmentStart: off, segment: seg };
+    }
+    off += seg.length;
+  }
+  return { segmentStart: flatIdx, segment: [] };
+}
+
+function chartSlotsForConference(teams) {
+  const perTeam = teams.map((t) => {
+    const n = splitIntoSeriesSegments(t.games).length;
+    return Math.max(n, 1) * GAMES_PER_ROUND;
+  });
+  return Math.max(...perTeam, GAMES_PER_ROUND);
+}
 
 function seriesStatus(games) {
-  const w = countWins(games);
-  const l = countLosses(games);
+  const segs = splitIntoSeriesSegments(games);
+  if (!segs.length) return { label: "—", cls: "tied" };
+  const activeIdx = segs.findIndex((s) => !segmentSeriesFinished(s));
+  const seg = activeIdx >= 0 ? segs[activeIdx] : segs[segs.length - 1];
+  const played = seg.filter((g) => g.diff != null);
+  const w = countWins(played);
+  const l = countLosses(played);
   if (w === 4) return { label: `WON 4-${l}`,  cls: "leading"  };
   if (l === 4) return { label: `LOST ${w}-4`, cls: "trailing" };
   const cls = w > l ? "leading" : l > w ? "trailing" : "tied";
@@ -111,13 +187,15 @@ function getTodayGames(data, todayKey) {
       // Series standing as-of the game: for scheduled games show record entering the game;
       // for played games show record after the final.
       const includeCurrent = g.diff !== null;
+      const { segmentStart, segment } = segmentAtFlatIndex(team.games, gameIndex);
       let winsA = 0;
       let winsB = 0;
-      for (let i = 0; i < team.games.length; i++) {
-        const gg = team.games[i];
+      for (let si = 0; si < segment.length; si++) {
+        const globalIdx = segmentStart + si;
+        const gg = segment[si];
         if (gg.diff == null) continue;
-        if (!includeCurrent && i >= gameIndex) continue;
-        if (includeCurrent && i > gameIndex) continue;
+        if (!includeCurrent && globalIdx >= gameIndex) continue;
+        if (includeCurrent && globalIdx > gameIndex) continue;
         if (gg.diff > 0) winsA++;
         else if (gg.diff < 0) winsB++;
       }
@@ -140,7 +218,7 @@ function getTodayGames(data, todayKey) {
         awayScore,
         homeWon,
         played: g.diff !== null,
-        gameNumber: gameIndex + 1,
+        gameNumber: gameIndex - segmentStart + 1,
         seriesLabel,
         seriesEnded,
       });
@@ -152,13 +230,13 @@ function getTodayGames(data, todayKey) {
 // ─────────────────────────────────────────────
 //  RENDERERS (return HTML strings; all dynamic values escaped)
 // ─────────────────────────────────────────────
-function renderXAxis(totalPlayed) {
+function renderXAxis(chartSlots, playedResultsCount) {
   let gameNum = 0;
-  const inner = visibleRounds(totalPlayed).map((round, r) => {
+  const inner = visibleRounds(chartSlots).map((round, r) => {
     const divider = r > 0 ? `<div class="x-divider"></div>` : "";
     const ticks = Array.from({ length: round.games }, (_, g) => {
       gameNum++;
-      const played = gameNum <= totalPlayed ? " played" : "";
+      const played = gameNum <= playedResultsCount ? " played" : "";
       return `<div class="x-tick${played}">G${g + 1}</div>`;
     }).join("");
     const group = `<div class="x-round">
@@ -170,7 +248,7 @@ function renderXAxis(totalPlayed) {
   return `<div class="x-axis">${inner}</div>`;
 }
 
-function renderSlot(game, gameIndex, roundLabel, finished) {
+function renderSlot(game, slotInRound, roundLabel, finished) {
   if (!game || game.diff === null) {
     return finished
       ? `<div class="bar-slot"></div>`
@@ -186,7 +264,7 @@ function renderSlot(game, gameIndex, roundLabel, finished) {
   const yt = sanitizeYoutubeId(game.youtubeId);
   return `
     <div class="bar-slot has-game"
-      data-game="${gameIndex + 1}"
+      data-game="${slotInRound + 1}"
       data-round="${esc(roundLabel)}"
       data-score="${esc(game.score)}"
       data-diff="${sign}${game.diff}"
@@ -198,20 +276,37 @@ function renderSlot(game, gameIndex, roundLabel, finished) {
     </div>`;
 }
 
-function renderBars(team) {
-  const totalPlayed = team.games.length;
-  const finished    = isSeriesWon(team.games) || isEliminated(team.games);
-  return visibleRounds(totalPlayed).map((round, r) => {
+function renderBars(team, conferenceChartSlots) {
+  const segs = splitIntoSeriesSegments(team.games);
+  const eliminated = isEliminated(team.games);
+  return visibleRounds(conferenceChartSlots).map((round, r) => {
     const divider = r > 0 ? `<div class="round-divider"></div>` : "";
+    const seg = r < segs.length ? segs[r] : null;
+    const done = seg ? segmentSeriesFinished(seg) : true;
     const slots = Array.from({ length: round.games }, (_, g) => {
-      const idx = r * GAMES_PER_ROUND + g;
-      return renderSlot(team.games[idx], idx, round.label, finished);
+      const game = seg?.[g];
+      if (game && game.diff != null) {
+        return renderSlot(game, g, round.label, false);
+      }
+      if (game && game.diff == null) {
+        return renderSlot(game, g, round.label, false);
+      }
+      if (!seg) {
+        return renderSlot(null, g, round.label, true);
+      }
+      if (g >= seg.length && done) {
+        return renderSlot(null, g, round.label, true);
+      }
+      if (g >= seg.length && eliminated) {
+        return renderSlot(null, g, round.label, true);
+      }
+      return renderSlot(null, g, round.label, false);
     }).join("");
     return divider + slots;
   }).join("");
 }
 
-function renderTeamRow(team) {
+function renderTeamRow(team, conferenceChartSlots) {
   const status = seriesStatus(team.games);
   const elim   = isEliminated(team.games) ? " eliminated" : "";
   const logo   = logoFor(team.abbr);
@@ -228,7 +323,7 @@ function renderTeamRow(team) {
           <div class="series-status ${status.cls}">${esc(status.label)}</div>
         </div>
       </div>
-      <div class="chart-area">${renderBars(team)}</div>
+      <div class="chart-area">${renderBars(team, conferenceChartSlots)}</div>
     </div>`;
 }
 
@@ -285,15 +380,19 @@ function renderDayGamesSection(data, dayDate, title, labelCls) {
 }
 
 function renderConference({ teams, label, cls, round }) {
-  const maxGames = Math.max(...teams.map((t) => t.games.length));
+  const conferenceChartSlots = chartSlotsForConference(teams);
+  const playedResultsCount = Math.max(
+    0,
+    ...teams.map((t) => t.games.filter((g) => g.diff != null).length),
+  );
   return `
     <div class="conf-section">
       <div class="conf-label ${cls}">
         ${esc(label)} Conference
         <span class="round-tag">${esc(round)}</span>
       </div>
-      ${renderXAxis(maxGames)}
-      ${teams.map(renderTeamRow).join("")}
+      ${renderXAxis(conferenceChartSlots, playedResultsCount)}
+      ${teams.map((t) => renderTeamRow(t, conferenceChartSlots)).join("")}
     </div>`;
 }
 

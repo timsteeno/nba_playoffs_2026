@@ -1,10 +1,10 @@
 {
   "lastUpdated": "2026-04-28",
-  "round": "First Round",
+  "round": "Conference Semifinals",
   "east": [
     {
       "seed": 1, "abbr": "DET", "name": "Detroit Pistons",
-      "opponent": "ORL", "oppName": "Orlando Magic", "oppSeed": 8,
+      "opponent": "CLE", "oppName": "Cleveland Cavaliers", "oppSeed": 4,
       "games": [
         { "diff": -11, "score": "101-112", "home": true, "date": "Apr 19", "youtubeId": "R_vR5eLI_rc"},
         { "diff": 15, "score": "98-83", "home": true, "date": "Apr 22", "youtubeId": "oKkhTdPR3DA"},
@@ -12,7 +12,8 @@
         { "diff": -6, "score": "88-94", "home": false, "date": "Apr 27", "youtubeId": "5yUo-kK9j1o"},
         { "diff": 7, "score": "116-109", "home": true, "date": "Apr 29","youtubeId": "Qxsa7ZJsLLI"},
         { "diff": 14, "score": "93-79", "home": false, "date": "May 1", "youtubeId": "_X6F17-tWac"},
-        { "diff": null, "score": null, "home": true, "date": "May 3" }
+        { "diff": 22, "score": "116-94", "home": true, "date": "May 3", "youtubeId": "JExrf8cRSTg"},
+        { "diff": null, "score": null, "home": true, "date": "May 5" }
       ]
     },
     {
@@ -25,24 +26,25 @@
         { "diff": 32, "score": "128-96", "home": false, "date": "Apr 26", "youtubeId": "gdt0C0NGhjg"},
         { "diff": -16, "score": "97-113", "home": true, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
         { "diff": -13, "score": "93-106", "home": false, "date": "Apr 30", "youtubeId": "I5sKEmcuwcE"},
-        { "diff": -9, "score": "100-109", "home": true, "date": "May 2" }
+        { "diff": -9, "score": "100-109", "home": true, "date": "May 2", "youtubeId": "DJYyZAxulTM"}
       ]
     },
     {
       "seed": 3, "abbr": "NYK", "name": "New York Knicks",
-      "opponent": "ATL", "oppName": "Atlanta Hawks", "oppSeed": 6,
+      "opponent": "PHI", "oppName": "Philadelphia 76ers", "oppSeed": 7,
       "games": [
         { "diff": 11, "score": "113-102", "home": true, "date": "Apr 18", "youtubeId": "cDpGq-xlE6Y"},
         { "diff": -1, "score": "106-107", "home": true, "date": "Apr 20", "youtubeId": "frvbdAT5l7c"},
         { "diff": -1, "score": "108-109", "home": false, "date": "Apr 23","youtubeId": "vmMWvXMl-yc"},
         { "diff": 16, "score": "114-98", "home": false, "date": "Apr 25", "youtubeId": "Hz2uEZ7oow"},
         { "diff": 29, "score": "126-97", "home": true, "date": "Apr 28", "youtubeId": "_gOcjhr7cuE"},
-        { "diff": 51, "score": "140-89", "home": false, "date": "Apr 30", "youtubeId": "a-x26gJdDZk"}
+        { "diff": 51, "score": "140-89", "home": false, "date": "Apr 30", "youtubeId": "a-x26gJdDZk"},
+        { "diff": 39, "score": "137-98", "home": false, "date": "May 4", "youtubeId": "HLujkMk403A"}
       ]
     },
     {
       "seed": 4, "abbr": "CLE", "name": "Cleveland Cavaliers",
-      "opponent": "TOR", "oppName": "Toronto Raptors", "oppSeed": 5,
+      "opponent": "DET", "oppName": "Detroit Pistons", "oppSeed": 1,
       "games": [
         { "diff": 13, "score": "126-113", "home": true, "date": "Apr 18", "youtubeId": "CfoT98jQkWE"},
         { "diff": 10, "score": "115-105", "home": true, "date": "Apr 20", "youtubeId": "0ziLIqPZkK8"},
@@ -50,7 +52,8 @@
         { "diff": -4, "score": "89-93", "home": false, "date": "Apr 26", "youtubeId": "0kKYyd-bm7A"},
         { "diff": 5, "score": "125-120", "home": true, "date": "Apr 29", "youtubeId": "Qnof3u6sJtQ"},
         { "diff": -2, "score": "110-112", "home": false, "date": "May 1", "youtubeId": "e3gc2w_RzaE"},
-        { "diff": null, "score": null, "home": true, "date": "May 3" }
+        { "diff": 12, "score": "114-102", "home": true, "date": "May 3", "youtubeId": "ziOjCCn55QU"},
+        { "diff": null, "score": null, "home": false, "date": "May 5" }
       ]
     },
     {
@@ -63,7 +66,7 @@
         { "diff": 4, "score": "93-89", "home": true, "date": "Apr 26", "youtubeId": "0kKYyd-bm7A"},
         { "diff": -5, "score": "120-125", "home": false, "date": "Apr 29", "youtubeId": "Qnof3u6sJtQ"},
         { "diff": 2, "score": "112-110", "home": true, "date": "May 1", "youtubeId": "e3gc2w_RzaE"},
-        { "diff": null, "score": null, "home": false, "date": "May 3" }
+        { "diff": -12, "score": "102-114", "home": false, "date": "May 3", "youtubeId": "ziOjCCn55QU"}
       ]
     },
     {
@@ -80,15 +83,16 @@
     },
     {
       "seed": 7, "abbr": "PHI", "name": "Philadelphia 76ers",
-      "opponent": "BOS", "oppName": "Boston Celtics", "oppSeed": 2,
+      "opponent": "NYK", "oppName": "New York Knicks", "oppSeed": 3,
       "games": [
         { "diff": -32, "score": "91-123", "home": false, "date": "Apr 19", "youtubeId": "Sv9N4IPSYzA"},
         { "diff": 14, "score": "111-97", "home": false, "date": "Apr 21", "youtubeId": "xeumsFo8qiM"},
         { "diff": -8, "score": "100-108", "home": true, "date": "Apr 24", "youtubeId": "xgao4BvqHbY"},
-        { "diff": -32, "score": "96-128", "home": true, "date": "Apr 26", "youtubeId": "Kv_43B0Q5p4"},
+        { "diff": -32, "score": "96-128", "home": true, "date": "Apr 26", "youtubeId": "gdt0C0NGhjg"},
         { "diff": 16, "score": "113-97", "home": false, "date": "Apr 28", "youtubeId": "eticSYxSdrE"},
         { "diff": 13, "score": "106-93", "home": true, "date": "Apr 30", "youtubeId": "I5sKEmcuwcE"},
-        { "diff": 9, "score": "109-100", "home": false, "date": "May 2", "youtubeId": "3XJp-QFgU7s"}
+        { "diff": 9, "score": "109-100", "home": false, "date": "May 2", "youtubeId": "DJYyZAxulTM"},
+        { "diff": -39, "score": "98-137", "home": false, "date": "May 4", "youtubeId": "HLujkMk403A"}
       ]
     },
     {
@@ -101,30 +105,32 @@
         { "diff": 6, "score": "94-88", "home": true, "date": "Apr 27", "youtubeId": "5yUo-kK9j1o"},
         { "diff": -7, "score": "109-116", "home": false, "date": "Apr 29", "youtubeId": "Qxsa7ZJsLLI"},
         { "diff": -14, "score": "79-93", "home": true, "date": "May 1", "youtubeId": "_X6F17-tWac"},
-        { "diff": null, "score": null, "home": false, "date": "May 3" }
+        { "diff": -22, "score": "94-116", "home": false, "date": "May 3", "youtubeId": "JExrf8cRSTg"}
       ]
     }
   ],
   "west": [
     {
       "seed": 1, "abbr": "OKC", "name": "Oklahoma City Thunder",
-      "opponent": "PHX", "oppName": "Phoenix Suns", "oppSeed": 8,
+      "opponent": "LAL", "oppName": "Los Angeles Lakers", "oppSeed": 4,
       "games": [
         { "diff": 35, "score": "119-84", "home": true, "date": "Apr 19", "youtubeId": "YrwJN0EWx9o"},
         { "diff": 13, "score": "120-107", "home": true, "date": "Apr 22", "youtubeId": "8OBEkoMb2rU"},
         { "diff": 12, "score": "121-109", "home": false, "date": "Apr 25", "youtubeId": "Jv3lp2ojSr0"},
-        { "diff": 9, "score": "131-122", "home": false, "date": "Apr 27", "youtubeId": "aFqA5K1HiAs"}
+        { "diff": 9, "score": "131-122", "home": false, "date": "Apr 27", "youtubeId": "aFqA5K1HiAs"},
+        { "diff": null, "score": null, "home": true, "date": "May 5" }
       ]
     },
     {
       "seed": 2, "abbr": "SAS", "name": "San Antonio Spurs",
-      "opponent": "POR", "oppName": "Portland Trail Blazers", "oppSeed": 7,
+      "opponent": "MIN", "oppName": "Minnesota Timberwolves", "oppSeed": 6,
       "games": [
         { "diff": 13, "score": "111-98", "home": true, "date": "Apr 19", "youtubeId": "eadbv_XnpX0"},
         { "diff": -3, "score": "103-106", "home": true, "date": "Apr 21", "youtubeId": "X49TSoptf-c"},
         { "diff": 12, "score": "120-108", "home": false, "date": "Apr 24", "youtubeId": "yfmsGK_PdaM"},
         { "diff": 21, "score": "114-93", "home": false, "date": "Apr 26", "youtubeId": "F2ne3WZuCQo"},
-        { "diff": 19, "score": "114-95", "home": true, "date": "Apr 28", "youtubeId": "3Iug_1vp-Kk"}
+        { "diff": 19, "score": "114-95", "home": true, "date": "Apr 28", "youtubeId": "3Iug_1vp-Kk"},
+        { "diff": -2, "score": "102-104", "home": true, "date": "May 4" }
       ]
     },
     {
@@ -141,14 +147,15 @@
     },
     {
       "seed": 4, "abbr": "LAL", "name": "Los Angeles Lakers",
-      "opponent": "HOU", "oppName": "Houston Rockets", "oppSeed": 5,
+      "opponent": "OKC", "oppName": "Oklahoma City Thunder", "oppSeed": 1,
       "games": [
         { "diff": 9, "score": "107-98", "home": true, "date": "Apr 18", "youtubeId": "9gr45EIsHLU"},
         { "diff": 7, "score": "101-94", "home": true, "date": "Apr 21", "youtubeId": "S4OAzXJWSWs"},
         { "diff": 4, "score": "112-108", "home": false, "date": "Apr 24", "youtubeId": "s6w074klwwk"},
         { "diff": -19, "score": "96-115", "home": false, "date": "Apr 26", "youtubeId": "nG9DczGPorI"},
         { "diff": -6, "score": "93-99", "home": true, "date": "Apr 29", "youtubeId": "MZaIMc1r0Uo"},
-        { "diff": 20, "score": "98-78", "home": false, "date": "May 1", "youtubeId": "GrpWCkylDwA"}
+        { "diff": 20, "score": "98-78", "home": false, "date": "May 1", "youtubeId": "GrpWCkylDwA"},
+        { "diff": null, "score": null, "home": false, "date": "May 5" }
       ]
     },
     {
@@ -165,14 +172,15 @@
     },
     {
       "seed": 6, "abbr": "MIN", "name": "Minnesota Timberwolves",
-      "opponent": "DEN", "oppName": "Denver Nuggets", "oppSeed": 3,
+      "opponent": "SAS", "oppName": "San Antonio Spurs", "oppSeed": 2,
       "games": [
         { "diff": -11, "score": "105-116", "home": false, "date": "Apr 18", "youtubeId": "CAsKkFjBIEo"},
         { "diff": 5, "score": "119-114", "home": false, "date": "Apr 20", "youtubeId": "WMDnpbs0bEI"},
         { "diff": 17, "score": "113-96", "home": true, "date": "Apr 23", "youtubeId": "tGFwYvbPOtE" },
         { "diff": 16, "score": "112-96", "home": true, "date": "Apr 25", "youtubeId": "cSKA-dQlnc8"},
         { "diff": -12, "score": "113-125", "home": false, "date": "Apr 27", "youtubeId": "wwArFQFol6E"},
-        { "diff": 12, "score": "110-98", "home": true, "date": "Apr 30", "youtubeId": "Lb6exsh8ik8"}
+        { "diff": 12, "score": "110-98", "home": true, "date": "Apr 30", "youtubeId": "Lb6exsh8ik8"},
+        { "diff": 2, "score": "104-102", "home": false, "date": "May 4" }
       ]
     },
     {
